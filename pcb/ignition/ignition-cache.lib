@@ -19,6 +19,21 @@ X 3 3 100 -200 100 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
+# agg-kicad_D
+#
+DEF agg-kicad_D D 0 40 N N 1 F N
+F0 "D" 50 70 50 H V C CNN
+F1 "agg-kicad_D" 50 -70 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+P 2 0 1 0 30 30 30 -30 N
+P 4 0 1 0 70 30 30 0 70 -30 70 30 F
+X ~ 1 0 0 30 R 50 50 1 1 P
+X ~ 2 100 0 30 L 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
 # agg-kicad_GND
 #
 DEF agg-kicad_GND #PWR 0 40 N N 1 F P
@@ -57,6 +72,30 @@ X GND EP -500 -200 100 R 50 50 0 0 W
 ENDDRAW
 ENDDEF
 #
+# agg-kicad_NFET
+#
+DEF agg-kicad_NFET Q 0 1 Y N 1 F N
+F0 "Q" -250 30 50 H V L CNN
+F1 "agg-kicad_NFET" -250 -160 50 H V L CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+C -30 -45 70 0 1 0 N
+P 2 0 1 0 -150 -100 -50 -100 N
+P 2 0 1 0 -50 -100 -50 10 N
+P 2 0 1 0 -40 -85 0 -85 N
+P 2 0 1 0 -40 -70 -40 -100 N
+P 2 0 1 0 -40 -30 -40 -60 N
+P 2 0 1 0 -40 10 -40 -20 N
+P 3 0 1 0 -40 -45 0 -45 0 -150 N
+P 3 0 1 0 -40 -5 0 -5 0 50 N
+P 4 0 1 0 -40 -45 -15 -30 -15 -60 -40 -45 F
+X G 1 -200 -100 50 R 50 50 1 1 P
+X S 2 0 -200 50 U 50 50 1 1 P
+X D 3 0 100 50 D 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
 # agg-kicad_PART
 #
 DEF agg-kicad_PART X 0 40 Y Y 1 F N
@@ -66,6 +105,37 @@ F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
 S 0 150 500 -50 0 1 0 f
+ENDDRAW
+ENDDEF
+#
+# agg-kicad_R
+#
+DEF agg-kicad_R R 0 40 N N 1 F N
+F0 "R" 50 50 50 H V C CNN
+F1 "agg-kicad_R" 50 -50 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+S 20 10 80 -10 0 1 0 f
+X ~ 1 0 0 20 R 50 50 1 1 P
+X ~ 2 100 0 20 L 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
+# agg-kicad_SCHOTTKY
+#
+DEF agg-kicad_SCHOTTKY D 0 40 N N 1 F N
+F0 "D" 50 70 50 H V C CNN
+F1 "agg-kicad_SCHOTTKY" 50 -70 50 H V C CNN
+F2 "" -50 -30 50 H I C CNN
+F3 "" 50 70 50 H I C CNN
+DRAW
+P 2 0 1 0 30 30 30 -30 N
+P 3 0 1 0 30 -30 40 -30 40 -20 N
+P 3 0 1 0 30 30 20 30 20 20 N
+P 4 0 1 0 70 30 30 0 70 -30 70 30 F
+X ~ 1 0 0 30 R 50 50 1 1 P
+X ~ 2 100 0 30 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
@@ -240,25 +310,11 @@ X ~ ~ 400 350 300 L 60 60 1 1 N
 ENDDRAW
 ENDDEF
 #
-# voltages_24v_A
+# voltages_24v
 #
-DEF voltages_24v_A #PWR 0 40 N N 1 F P
+DEF voltages_24v #PWR 0 40 N N 1 F P
 F0 "#PWR" 0 110 50 H I L CNN
-F1 "voltages_24v_A" 0 90 50 H V C CNN
-F2 "" 0 0 50 H I C CNN
-F3 "" 0 0 50 H I C CNN
-DRAW
-P 2 0 1 0 0 50 20 20 N
-P 3 0 1 0 0 0 0 50 -20 20 N
-X VCC 1 0 0 0 L 50 50 1 1 W N
-ENDDRAW
-ENDDEF
-#
-# voltages_24v_B
-#
-DEF voltages_24v_B #PWR 0 40 N N 1 F P
-F0 "#PWR" 0 110 50 H I L CNN
-F1 "voltages_24v_B" 0 90 50 H V C CNN
+F1 "voltages_24v" 0 90 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW

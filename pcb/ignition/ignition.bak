@@ -1,0 +1,663 @@
+EESchema Schematic File Version 4
+LIBS:ignition-cache
+EELAYER 26 0
+EELAYER END
+$Descr A3 16535 11693
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L agg-kicad:CONN_01x03 J?
+U 1 1 5BCDF963
+P 750 1050
+F 0 "J?" H 750 1150 50  0000 C CNN
+F 1 "PSU" H 750 750 50  0000 C CNN
+F 2 "agg:S03B-PASK-2" H 750 1050 50  0001 C CNN
+F 3 "" H 750 1050 50  0001 C CNN
+	1    750  1050
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:CONN_01x03 J?
+U 1 1 5BCDFB05
+P 1300 1050
+F 0 "J?" H 1300 1150 50  0000 C CNN
+F 1 "PSU" H 1300 750 50  0000 C CNN
+F 2 "agg:S03B-PASK-2" H 1300 1050 50  0001 C CNN
+F 3 "" H 1300 1050 50  0001 C CNN
+	1    1300 1050
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:GND #PWR?
+U 1 1 5BCDFF79
+P 1500 1350
+F 0 "#PWR?" H 1370 1390 50  0001 L CNN
+F 1 "GND" H 1500 1250 50  0000 C CNN
+F 2 "" H 1500 1350 50  0001 C CNN
+F 3 "" H 1500 1350 50  0001 C CNN
+	1    1500 1350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	850  1050 950  1050
+Wire Wire Line
+	850  1150 950  1150
+Wire Wire Line
+	950  1150 950  1050
+Connection ~ 950  1050
+Wire Wire Line
+	850  1250 950  1250
+Wire Wire Line
+	950  1250 950  1150
+Connection ~ 950  1150
+Wire Wire Line
+	950  950  950  1050
+Wire Wire Line
+	1400 1250 1500 1250
+Wire Wire Line
+	1500 1250 1500 1350
+Wire Wire Line
+	1500 1250 1500 1150
+Wire Wire Line
+	1500 1150 1400 1150
+Connection ~ 1500 1250
+Wire Wire Line
+	1500 1150 1500 1050
+Wire Wire Line
+	1500 1050 1400 1050
+Connection ~ 1500 1150
+Text Notes 1300 1800 0    50   ~ 0
+Vin: 250 VAC @ 2.5A Max\nVout: 24 VDC @ 8.8A Max
+$Comp
+L agg-kicad:PART X?
+U 1 1 5BCE0246
+P 700 1750
+F 0 "X?" H 750 1850 50  0000 L CNN
+F 1 "PSU" H 750 1750 50  0000 L CNN
+F 2 "" H 700 1750 50  0001 C CNN
+F 3 "http://www.deltapsu.com/products/download/Datasheet/PMT-24V200W1AM" H 700 1750 50  0001 C CNN
+F 4 "1145-1076-ND" H 700 1750 50  0001 C CNN "Digikey"
+	1    700  1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:STM32F4xxVxTx IC?
+U 1 1 5BCE094A
+P 14250 4750
+F 0 "IC?" H 14250 7975 50  0000 C CNN
+F 1 "STM32F4xxVxTx" H 14250 7884 50  0000 C CNN
+F 2 "agg:LQFP-100" H 13800 1550 50  0001 L CNN
+F 3 "http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00037051.pdf" H 13800 1450 50  0001 L CNN
+F 4 "2215224" H 13800 1350 50  0001 L CNN "Farnell"
+	1    14250 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:LTC4151 IC?
+U 1 1 5BCE1054
+P 1425 3100
+F 0 "IC?" H 1075 3600 50  0000 C CNN
+F 1 "LTC4151" H 1175 2600 50  0000 C CNN
+F 2 "agg:DFN-10-EP-LT" H 1025 2500 50  0001 L CNN
+F 3 "http://cds.linear.com/docs/en/datasheet/4151ff.pdf" H 1025 2400 50  0001 L CNN
+F 4 "2295457" H 1025 2300 50  0001 L CNN "Farnell"
+	1    1425 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:GND #PWR?
+U 1 1 5BCE1C32
+P 825 3575
+F 0 "#PWR?" H 695 3615 50  0001 L CNN
+F 1 "GND" H 825 3475 50  0000 C CNN
+F 2 "" H 825 3575 50  0001 C CNN
+F 3 "" H 825 3575 50  0001 C CNN
+	1    825  3575
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	925  3300 825  3300
+Wire Wire Line
+	925  3200 825  3200
+Wire Wire Line
+	825  3200 825  3300
+Wire Wire Line
+	925  3000 825  3000
+Wire Wire Line
+	825  3000 825  3200
+Connection ~ 825  3200
+Wire Wire Line
+	925  2900 825  2900
+Wire Wire Line
+	825  2900 825  3000
+Connection ~ 825  3000
+Text Notes 625  2150 0    79   ~ 16
+Supply Arming:
+$Comp
+L voltages:24v #PWR?
+U 1 1 5BD0B232
+P 825 2400
+F 0 "#PWR?" H 825 2510 50  0001 L CNN
+F 1 "24v" H 825 2524 50  0000 C CNN
+F 2 "" H 825 2400 50  0001 C CNN
+F 3 "" H 825 2400 50  0001 C CNN
+	1    825  2400
+	1    0    0    -1  
+$EndComp
+Text Notes 600  700  0    79   ~ 16
+Power Supply:
+Wire Wire Line
+	825  2700 925  2700
+Wire Wire Line
+	825  2400 825  2500
+$Comp
+L agg-kicad:R R?
+U 1 1 5BD0CE95
+P 2225 2500
+F 0 "R?" H 2275 2575 50  0000 C CNN
+F 1 "0.01R" H 2275 2425 50  0000 C CNN
+F 2 "" H 2225 2500 50  0001 C CNN
+F 3 "" H 2225 2500 50  0001 C CNN
+F 4 "1107429" H 2225 2500 50  0001 C CNN "Farnell"
+	1    2225 2500
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1925 2700 2025 2700
+Wire Wire Line
+	2025 2700 2025 2500
+Wire Wire Line
+	2025 2500 2125 2500
+Wire Wire Line
+	2025 2500 825  2500
+Connection ~ 2025 2500
+Connection ~ 825  2500
+Wire Wire Line
+	825  2500 825  2700
+Wire Wire Line
+	1925 2800 2325 2800
+Wire Wire Line
+	2325 2800 2325 2500
+Wire Wire Line
+	2325 2500 2225 2500
+NoConn ~ 1925 3300
+Wire Wire Line
+	1925 3000 2025 3000
+Wire Wire Line
+	1925 3100 2025 3100
+Text Label 2025 3000 0    50   ~ 0
+I2C1_SDA
+Text Label 2025 3100 0    50   ~ 0
+I2C1_SCL
+$Comp
+L voltages:24v #PWR?
+U 1 1 5BD16ACA
+P 950 950
+F 0 "#PWR?" H 950 1060 50  0001 L CNN
+F 1 "24v" H 950 1074 50  0000 C CNN
+F 2 "" H 950 950 50  0001 C CNN
+F 3 "" H 950 950 50  0001 C CNN
+	1    950  950 
+	1    0    0    -1  
+$EndComp
+Text Label 3950 2600 0    50   ~ 0
+FIRE_DIST
+Text Notes 775  4200 0    50   ~ 0
+ADC Full Scale Range:\nVin: 102.4 V\nSense: 81.92 mV\nADIN: 2.048 V
+Text Notes 1925 2350 0    39   Italic 0
+Power Rating 1W
+Text Notes 1825 4200 0    50   ~ 0
+Sense Resistor Calcs:\nIs= 8.8 A\nVs = 8.8 x 0.01 = 88 mV\nPs = 8.8 x 8.8 x 0.01 = 0.77 W
+Text Notes 3225 4050 0    50   ~ 0
+Voltage Divider Calcs:\nVo = 10/(110+10) x 24 = 2 V
+$Comp
+L agg-kicad:R R?
+U 1 1 5BD2421B
+P 9350 2425
+F 0 "R?" H 9400 2500 50  0000 C CNN
+F 1 "100R" H 9400 2350 50  0000 C CNN
+F 2 "" H 9350 2425 50  0001 C CNN
+F 3 "" H 9350 2425 50  0001 C CNN
+	1    9350 2425
+	-1   0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:R R?
+U 1 1 5BD24620
+P 9125 2675
+F 0 "R?" V 9200 2750 50  0000 C CNN
+F 1 "110k" V 9125 2800 50  0000 C CNN
+F 2 "" H 9125 2675 50  0001 C CNN
+F 3 "" H 9125 2675 50  0001 C CNN
+	1    9125 2675
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	9125 2425 9125 2575
+Wire Wire Line
+	9125 2675 9125 2825
+$Comp
+L agg-kicad:GND #PWR?
+U 1 1 5BD2623C
+P 9125 2825
+F 0 "#PWR?" H 8995 2865 50  0001 L CNN
+F 1 "GND" H 9125 2725 50  0000 C CNN
+F 2 "" H 9125 2825 50  0001 C CNN
+F 3 "" H 9125 2825 50  0001 C CNN
+	1    9125 2825
+	-1   0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:NFET Q?
+U 1 1 5BD26412
+P 8825 2325
+F 0 "Q?" H 8913 2321 50  0000 L CNN
+F 1 "NFET" H 8913 2230 50  0000 L CNN
+F 2 "" H 8825 2325 50  0001 C CNN
+F 3 "" H 8825 2325 50  0001 C CNN
+F 4 "2053833" H 8825 2325 50  0001 C CNN "Farnell"
+	1    8825 2325
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	9125 2425 9025 2425
+$Comp
+L agg-kicad:GND #PWR?
+U 1 1 5BD26CE3
+P 8825 2825
+F 0 "#PWR?" H 8695 2865 50  0001 L CNN
+F 1 "GND" H 8825 2725 50  0000 C CNN
+F 2 "" H 8825 2825 50  0001 C CNN
+F 3 "" H 8825 2825 50  0001 C CNN
+	1    8825 2825
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	8825 2525 8825 2825
+Wire Wire Line
+	9250 2425 9125 2425
+Connection ~ 9125 2425
+$Comp
+L relay_spst:RELAY_SPST K?
+U 1 1 5BD2A1BF
+P 9300 2050
+F 0 "K?" H 9200 2400 50  0000 C CNN
+F 1 "16A SPST" H 9300 1900 50  0000 C CNN
+F 2 "" H 9300 2050 60  0000 C CNN
+F 3 "http://www.farnell.com/datasheets/1943542.pdf" H 9300 2050 60  0001 C CNN
+F 4 "1770616" H 9300 2050 50  0001 C CNN "Farnell"
+	1    9300 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:D D?
+U 1 1 5BD2D890
+P 10625 1425
+F 0 "D?" H 10675 1620 50  0000 C CNN
+F 1 "D" H 10675 1529 50  0000 C CNN
+F 2 "" H 10625 1425 50  0001 C CNN
+F 3 "" H 10625 1425 50  0001 C CNN
+	1    10625 1425
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:SCHOTTKY D?
+U 1 1 5BD2E594
+P 8650 2050
+F 0 "D?" H 8650 2125 50  0000 R CNN
+F 1 "SCHOTTKY" H 8700 2154 50  0001 C CNN
+F 2 "" H 8600 2020 50  0001 C CNN
+F 3 "" H 8700 2120 50  0001 C CNN
+	1    8650 2050
+	1    0    0    1   
+$EndComp
+$Comp
+L agg-kicad:LTC4151 IC?
+U 1 1 5BD46196
+P 7325 2400
+F 0 "IC?" H 6975 2900 50  0000 C CNN
+F 1 "LTC4151" H 7075 1900 50  0000 C CNN
+F 2 "agg:DFN-10-EP-LT" H 6925 1800 50  0001 L CNN
+F 3 "http://cds.linear.com/docs/en/datasheet/4151ff.pdf" H 6925 1700 50  0001 L CNN
+F 4 "2295457" H 6925 1600 50  0001 L CNN "Farnell"
+	1    7325 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:GND #PWR?
+U 1 1 5BD4619C
+P 6725 2925
+F 0 "#PWR?" H 6595 2965 50  0001 L CNN
+F 1 "GND" H 6725 2825 50  0000 C CNN
+F 2 "" H 6725 2925 50  0001 C CNN
+F 3 "" H 6725 2925 50  0001 C CNN
+	1    6725 2925
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6825 2600 6725 2600
+Wire Wire Line
+	6825 2500 6725 2500
+Wire Wire Line
+	6725 2500 6725 2600
+Wire Wire Line
+	6825 2300 6725 2300
+Wire Wire Line
+	6725 2300 6725 2500
+Connection ~ 6725 2500
+Wire Wire Line
+	6825 2200 6725 2200
+Wire Wire Line
+	6725 2000 6825 2000
+$Comp
+L agg-kicad:R R?
+U 1 1 5BD461BD
+P 8125 1800
+F 0 "R?" H 8175 1875 50  0000 C CNN
+F 1 "0.05R" H 8175 1725 50  0000 C CNN
+F 2 "" H 8125 1800 50  0001 C CNN
+F 3 "" H 8125 1800 50  0001 C CNN
+F 4 "1107481" H 8125 1800 50  0001 C CNN "Farnell"
+	1    8125 1800
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	7825 2000 7925 2000
+Wire Wire Line
+	7925 2000 7925 1800
+Wire Wire Line
+	7925 1800 8025 1800
+Connection ~ 7925 1800
+Wire Wire Line
+	6725 1800 6725 2000
+Wire Wire Line
+	7825 2100 8225 2100
+Wire Wire Line
+	8225 2100 8225 1800
+NoConn ~ 7825 2600
+Wire Wire Line
+	7825 2300 7925 2300
+Wire Wire Line
+	7825 2400 7925 2400
+Text Label 7925 2300 0    50   ~ 0
+I2C1_SDA
+Text Label 7925 2400 0    50   ~ 0
+I2C1_SCL
+Text Notes 7825 1650 0    39   Italic 0
+Power Rating 5W
+Text Label 6600 1800 2    50   ~ 0
+FIRE_DIST
+Connection ~ 6725 1800
+Wire Wire Line
+	8650 2050 8600 2050
+Wire Wire Line
+	8600 2050 8600 1950
+Wire Wire Line
+	8600 1950 8900 1950
+Wire Wire Line
+	8750 2050 8825 2050
+Wire Wire Line
+	8825 2225 8825 2050
+Connection ~ 8825 2050
+Wire Wire Line
+	8825 2050 8900 2050
+Wire Wire Line
+	9350 2425 9450 2425
+Text Label 9450 2425 0    50   ~ 0
+CH1_FIRE
+Wire Wire Line
+	6725 2200 6725 2000
+Connection ~ 6725 2000
+Wire Wire Line
+	6600 1800 6725 1800
+Text Notes 6650 3550 0    50   ~ 0
+ADC Full Scale Range:\nVin: 102.4 V\nSense: 81.92 mV\nADIN: 2.048 V
+Text Notes 7700 3550 0    50   ~ 0
+Sense Resistor Calcs:\nIs= 1.5 A (nom), 8.8 A (max)  \nVs = 1.5 x 0.05 = 75 mV\nPs = 8.8 x 8.8 x 0.05 = 3.78 W
+Text Notes 9100 3400 0    50   ~ 0
+Voltage Divider Calcs:\nVo = 10/(110+10) x 24 = 2 V
+$Comp
+L agg-kicad:R R?
+U 1 1 5BD8F6EF
+P 3475 3125
+F 0 "R?" H 3525 3200 50  0000 C CNN
+F 1 "100R" H 3525 3050 50  0000 C CNN
+F 2 "" H 3475 3125 50  0001 C CNN
+F 3 "" H 3475 3125 50  0001 C CNN
+	1    3475 3125
+	-1   0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:R R?
+U 1 1 5BD8F6F5
+P 3250 3375
+F 0 "R?" V 3325 3450 50  0000 C CNN
+F 1 "110k" V 3250 3500 50  0000 C CNN
+F 2 "" H 3250 3375 50  0001 C CNN
+F 3 "" H 3250 3375 50  0001 C CNN
+	1    3250 3375
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3250 3125 3250 3275
+Wire Wire Line
+	3250 3375 3250 3525
+$Comp
+L agg-kicad:GND #PWR?
+U 1 1 5BD8F6FD
+P 3250 3525
+F 0 "#PWR?" H 3120 3565 50  0001 L CNN
+F 1 "GND" H 3250 3425 50  0000 C CNN
+F 2 "" H 3250 3525 50  0001 C CNN
+F 3 "" H 3250 3525 50  0001 C CNN
+	1    3250 3525
+	-1   0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:NFET Q?
+U 1 1 5BD8F704
+P 2950 3025
+F 0 "Q?" H 3038 3021 50  0000 L CNN
+F 1 "NFET" H 3038 2930 50  0000 L CNN
+F 2 "" H 2950 3025 50  0001 C CNN
+F 3 "" H 2950 3025 50  0001 C CNN
+F 4 "2053833" H 2950 3025 50  0001 C CNN "Farnell"
+	1    2950 3025
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3250 3125 3150 3125
+$Comp
+L agg-kicad:GND #PWR?
+U 1 1 5BD8F70B
+P 2950 3525
+F 0 "#PWR?" H 2820 3565 50  0001 L CNN
+F 1 "GND" H 2950 3425 50  0000 C CNN
+F 2 "" H 2950 3525 50  0001 C CNN
+F 3 "" H 2950 3525 50  0001 C CNN
+	1    2950 3525
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	2950 3225 2950 3525
+Wire Wire Line
+	3375 3125 3250 3125
+Connection ~ 3250 3125
+$Comp
+L relay_spst:RELAY_SPST K?
+U 1 1 5BD8F715
+P 3425 2750
+F 0 "K?" H 3325 3100 50  0000 C CNN
+F 1 "16A SPST" H 3425 2600 50  0000 C CNN
+F 2 "" H 3425 2750 60  0000 C CNN
+F 3 "http://www.farnell.com/datasheets/1943542.pdf" H 3425 2750 60  0001 C CNN
+F 4 "1770616" H 3425 2750 50  0001 C CNN "Farnell"
+	1    3425 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:SCHOTTKY D?
+U 1 1 5BD8F71B
+P 2775 2750
+F 0 "D?" H 2775 2825 50  0000 R CNN
+F 1 "SCHOTTKY" H 2825 2854 50  0001 C CNN
+F 2 "" H 2725 2720 50  0001 C CNN
+F 3 "" H 2825 2820 50  0001 C CNN
+	1    2775 2750
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	2775 2750 2725 2750
+Wire Wire Line
+	2725 2650 3025 2650
+Wire Wire Line
+	2875 2750 2950 2750
+Wire Wire Line
+	2950 2925 2950 2750
+Connection ~ 2950 2750
+Wire Wire Line
+	2950 2750 3025 2750
+Wire Wire Line
+	3475 3125 3575 3125
+Text Label 3575 3125 0    50   ~ 0
+ARM_SUPPLY
+$Comp
+L agg-kicad:R R?
+U 1 1 5BD8F734
+P 2100 3575
+F 0 "R?" V 2200 3650 39  0000 C CNN
+F 1 "10k" V 2125 3650 39  0000 C CNN
+F 2 "" H 2100 3575 50  0001 C CNN
+F 3 "" H 2100 3575 50  0001 C CNN
+	1    2100 3575
+	0    -1   -1   0   
+$EndComp
+$Comp
+L agg-kicad:GND #PWR?
+U 1 1 5BD8F73A
+P 2100 3625
+F 0 "#PWR?" H 1970 3665 50  0001 L CNN
+F 1 "GND" H 2100 3525 50  0000 C CNN
+F 2 "" H 2100 3625 50  0001 C CNN
+F 3 "" H 2100 3625 50  0001 C CNN
+	1    2100 3625
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3025 2500 2725 2500
+Connection ~ 2325 2500
+Wire Wire Line
+	2725 2650 2725 2750
+Wire Wire Line
+	2725 2650 2725 2500
+Connection ~ 2725 2650
+Connection ~ 2725 2500
+Wire Wire Line
+	2725 2500 2325 2500
+Wire Wire Line
+	825  3575 825  3300
+Connection ~ 825  3300
+$Comp
+L agg-kicad:R R?
+U 1 1 5BDC4A92
+P 2300 3400
+F 0 "R?" H 2350 3350 39  0000 C CNN
+F 1 "110k" H 2350 3450 39  0000 C CNN
+F 2 "" H 2300 3400 50  0001 C CNN
+F 3 "" H 2300 3400 50  0001 C CNN
+	1    2300 3400
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1925 3400 2100 3400
+Wire Wire Line
+	2100 3475 2100 3400
+Connection ~ 2100 3400
+Wire Wire Line
+	2100 3400 2200 3400
+Wire Wire Line
+	2100 3575 2100 3625
+Wire Wire Line
+	2300 3400 2350 3400
+Text Label 2350 3400 0    50   ~ 0
+FIRE_DIST
+Wire Wire Line
+	3950 2600 3825 2600
+$Comp
+L agg-kicad:R R?
+U 1 1 5BDDBC8B
+P 8000 2875
+F 0 "R?" V 8100 2950 39  0000 C CNN
+F 1 "10k" V 8025 2950 39  0000 C CNN
+F 2 "" H 8000 2875 50  0001 C CNN
+F 3 "" H 8000 2875 50  0001 C CNN
+	1    8000 2875
+	0    -1   -1   0   
+$EndComp
+$Comp
+L agg-kicad:GND #PWR?
+U 1 1 5BDDBC91
+P 8000 2925
+F 0 "#PWR?" H 7870 2965 50  0001 L CNN
+F 1 "GND" H 8000 2825 50  0000 C CNN
+F 2 "" H 8000 2925 50  0001 C CNN
+F 3 "" H 8000 2925 50  0001 C CNN
+	1    8000 2925
+	1    0    0    -1  
+$EndComp
+$Comp
+L agg-kicad:R R?
+U 1 1 5BDDBC97
+P 8200 2700
+F 0 "R?" H 8250 2650 39  0000 C CNN
+F 1 "110k" H 8250 2750 39  0000 C CNN
+F 2 "" H 8200 2700 50  0001 C CNN
+F 3 "" H 8200 2700 50  0001 C CNN
+	1    8200 2700
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	7825 2700 8000 2700
+Wire Wire Line
+	8000 2775 8000 2700
+Connection ~ 8000 2700
+Wire Wire Line
+	8000 2700 8100 2700
+Wire Wire Line
+	8000 2875 8000 2925
+Wire Wire Line
+	8200 2700 8250 2700
+Text Label 8250 2700 0    50   ~ 0
+CH1
+Wire Wire Line
+	9700 1900 10975 1900
+Text Label 10975 1900 0    50   ~ 0
+CH1
+Text Notes 6200 1550 0    79   ~ 16
+Channel 1:
+Wire Wire Line
+	8600 1950 8600 1800
+Connection ~ 8600 1950
+Connection ~ 8600 1800
+Wire Wire Line
+	8600 1800 8900 1800
+Wire Wire Line
+	8225 1800 8600 1800
+Wire Wire Line
+	6725 1800 7925 1800
+Wire Wire Line
+	8125 1800 8225 1800
+Connection ~ 8225 1800
+Wire Wire Line
+	6725 2600 6725 2925
+Connection ~ 6725 2600
+$EndSCHEMATC
