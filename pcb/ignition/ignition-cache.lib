@@ -1,6 +1,36 @@
 EESchema-LIBRARY Version 2.4
 #encoding utf-8
 #
+# agg-kicad_3v3
+#
+DEF agg-kicad_3v3 #PWR 0 40 N N 1 F P
+F0 "#PWR" 0 110 50 H I L CNN
+F1 "agg-kicad_3v3" 0 90 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+P 2 0 1 0 0 50 20 20 N
+P 3 0 1 0 0 0 0 50 -20 20 N
+X 3v3 1 0 0 0 L 50 50 1 1 W N
+ENDDRAW
+ENDDEF
+#
+# agg-kicad_CONN_01x02
+#
+DEF agg-kicad_CONN_01x02 J 0 1 Y N 1 F N
+F0 "J" -50 100 50 H V L CNN
+F1 "agg-kicad_CONN_01x02" -50 -200 50 H V L CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+S 0 -95 -25 -105 0 1 0 F
+S 0 5 -25 -5 0 1 0 F
+S 0 50 -50 -150 0 1 0 f
+X 1 1 100 0 100 L 50 50 1 1 P
+X 2 2 100 -100 100 L 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
 # agg-kicad_CONN_01x03
 #
 DEF agg-kicad_CONN_01x03 J 0 1 Y N 1 F N
