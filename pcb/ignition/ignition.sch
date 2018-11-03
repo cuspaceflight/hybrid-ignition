@@ -2615,7 +2615,7 @@ F 0 "X8" H 3125 1125 50  0000 L CNN
 F 1 "Key Switch" H 3125 1025 50  0000 L CNN
 F 2 "" H 3075 1025 50  0001 C CNN
 F 3 "https://www.mouser.co.uk/datasheet/2/307/a165k_ds_e_3_3_csm604-795238.pdf" H 3075 1025 50  0001 C CNN
-F 4 "653-A165K-T2ML-2" H 3075 1025 50  0001 C CNN "Mouser"
+F 4 "51-235.025D2" H 3075 1025 50  0001 C CNN "Farnell"
 	1    3075 1025
 	1    0    0    -1  
 $EndComp
