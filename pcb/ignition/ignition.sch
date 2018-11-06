@@ -473,17 +473,9 @@ F 3 "" H 2700 3725 50  0001 C CNN
 	1    2700 3725
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	3625 2600 3325 2600
 Connection ~ 2925 2600
 Wire Wire Line
 	3325 2750 3325 2850
-Wire Wire Line
-	3325 2750 3325 2600
-Connection ~ 3325 2750
-Connection ~ 3325 2600
-Wire Wire Line
-	3325 2600 2925 2600
 Wire Wire Line
 	1425 3675 1425 3400
 Connection ~ 1425 3400
@@ -554,14 +546,6 @@ Text Label 9825 2375 0    50   ~ 0
 CH1_CONT
 Text Notes 5550 2200 0    79   ~ 16
 Channel 1:
-Wire Wire Line
-	7975 2675 7975 2525
-Connection ~ 7975 2675
-Connection ~ 7975 2525
-Wire Wire Line
-	7975 2525 8275 2525
-Wire Wire Line
-	7600 2525 7975 2525
 Wire Wire Line
 	6100 2525 7300 2525
 Wire Wire Line
@@ -937,14 +921,6 @@ CH2_CONT
 Text Notes 600  4750 0    79   ~ 16
 Channel 2:
 Wire Wire Line
-	3025 5225 3025 5075
-Connection ~ 3025 5225
-Connection ~ 3025 5075
-Wire Wire Line
-	3025 5075 3325 5075
-Wire Wire Line
-	2650 5075 3025 5075
-Wire Wire Line
 	1150 5075 2350 5075
 Wire Wire Line
 	2550 5075 2650 5075
@@ -1277,14 +1253,6 @@ Text Label 9825 4925 0    50   ~ 0
 CH3_CONT
 Text Notes 5550 4750 0    79   ~ 16
 Channel 3:
-Wire Wire Line
-	7975 5225 7975 5075
-Connection ~ 7975 5225
-Connection ~ 7975 5075
-Wire Wire Line
-	7975 5075 8275 5075
-Wire Wire Line
-	7600 5075 7975 5075
 Wire Wire Line
 	6100 5075 7300 5075
 Wire Wire Line
@@ -1619,14 +1587,6 @@ CH4_CONT
 Text Notes 600  7250 0    79   ~ 16
 Channel 4:
 Wire Wire Line
-	3025 7725 3025 7575
-Connection ~ 3025 7725
-Connection ~ 3025 7575
-Wire Wire Line
-	3025 7575 3325 7575
-Wire Wire Line
-	2650 7575 3025 7575
-Wire Wire Line
 	1150 7575 2350 7575
 Wire Wire Line
 	2550 7575 2650 7575
@@ -1941,14 +1901,6 @@ Text Label 9825 7425 0    50   ~ 0
 CH5_CONT
 Text Notes 5550 7250 0    79   ~ 16
 Channel 5:
-Wire Wire Line
-	7975 7725 7975 7575
-Connection ~ 7975 7725
-Connection ~ 7975 7575
-Wire Wire Line
-	7975 7575 8275 7575
-Wire Wire Line
-	7600 7575 7975 7575
 Wire Wire Line
 	6100 7575 7300 7575
 Wire Wire Line
@@ -2825,9 +2777,9 @@ Wire Wire Line
 Connection ~ 2025 1075
 Wire Wire Line
 	2025 1075 2075 1075
-Text Label 14125 5725 0    50   ~ 0
+Text Label 12725 6825 2    50   ~ 0
 ARM_GRN
-Text Label 14125 5825 0    50   ~ 0
+Text Label 12725 6925 2    50   ~ 0
 ARM_RED
 Text Label 14125 1225 0    50   ~ 0
 CH1_CONT
@@ -2839,19 +2791,19 @@ Text Label 14125 1525 0    50   ~ 0
 CH4_CONT
 Text Label 14125 1325 0    50   ~ 0
 CH2_CONT
-Text Label 14125 1725 0    50   ~ 0
+Text Label 12725 3825 2    50   ~ 0
 PSU_MON
-Text Label 14125 3925 0    50   ~ 0
+Text Label 14125 5025 0    50   ~ 0
 ARM_SUPPLY
-Text Label 14125 4125 0    50   ~ 0
+Text Label 12725 5725 2    50   ~ 0
 CH2_FIRE
-Text Label 14125 4025 0    50   ~ 0
+Text Label 12725 5625 2    50   ~ 0
 CH1_FIRE
-Text Label 14125 4225 0    50   ~ 0
+Text Label 14125 5525 0    50   ~ 0
 CH3_FIRE
-Text Label 14125 4325 0    50   ~ 0
+Text Label 14125 5725 0    50   ~ 0
 CH4_FIRE
-Text Label 14125 4425 0    50   ~ 0
+Text Label 14125 5825 0    50   ~ 0
 CH5_FIRE
 Text Label 12725 6725 2    50   ~ 0
 I2C2_SDA
@@ -3998,7 +3950,7 @@ F 3 "" H 8025 1225 50  0001 C CNN
 	1    8025 1225
 	1    0    0    -1  
 $EndComp
-Text Label 14125 6125 0    50   ~ 0
+Text Label 14125 1925 0    50   ~ 0
 STATUS
 $Comp
 L agg-kicad:R R37
@@ -4218,11 +4170,10 @@ Wire Wire Line
 Wire Wire Line
 	14025 1625 14125 1625
 Wire Wire Line
-	14025 1725 14125 1725
+	12825 3825 12725 3825
 NoConn ~ 14025 1825
-NoConn ~ 14025 1925
 Text Notes 14700 1450 0    50   ~ 0
-ADC12 IN 10-15
+ADC12 IN 10-14
 Wire Wire Line
 	12725 6425 12825 6425
 Wire Wire Line
@@ -4246,46 +4197,38 @@ USART2_TX
 Text Label 7675 10375 0    50   ~ 0
 USART2_RX
 Wire Wire Line
-	14025 3925 14125 3925
+	14025 5025 14125 5025
 Wire Wire Line
-	14125 4025 14025 4025
+	12725 5625 12825 5625
 Wire Wire Line
-	14025 4125 14125 4125
+	12825 5725 12725 5725
 Wire Wire Line
-	14025 4225 14125 4225
-Wire Wire Line
-	14025 4325 14125 4325
-Wire Wire Line
-	14025 4425 14125 4425
+	14025 5525 14125 5525
 Wire Wire Line
 	14025 5725 14125 5725
 Wire Wire Line
-	14125 5825 14025 5825
+	14025 5825 14125 5825
 Wire Wire Line
-	14025 6125 14125 6125
+	12825 6825 12725 6825
+Wire Wire Line
+	12725 6925 12825 6925
+Wire Wire Line
+	14025 1925 14125 1925
 NoConn ~ 14025 6425
 NoConn ~ 14025 6325
 NoConn ~ 14025 6225
 NoConn ~ 14025 6025
-NoConn ~ 14025 5925
-NoConn ~ 14025 5525
 NoConn ~ 14025 5425
 NoConn ~ 14025 5325
 NoConn ~ 14025 5225
 NoConn ~ 14025 5125
-NoConn ~ 14025 5025
 NoConn ~ 14025 4925
 NoConn ~ 14025 4825
 NoConn ~ 14025 4625
 NoConn ~ 12825 7125
 NoConn ~ 12825 7025
-NoConn ~ 12825 6925
-NoConn ~ 12825 6825
 NoConn ~ 12825 6225
 NoConn ~ 12825 6125
-NoConn ~ 12825 5525
-NoConn ~ 12825 5625
-NoConn ~ 12825 5725
 NoConn ~ 12825 5825
 NoConn ~ 12825 5925
 NoConn ~ 12825 6025
@@ -4298,7 +4241,6 @@ NoConn ~ 12825 4425
 NoConn ~ 12825 4325
 NoConn ~ 12825 4225
 NoConn ~ 12825 4125
-NoConn ~ 12825 3825
 NoConn ~ 12825 3725
 NoConn ~ 14025 3725
 NoConn ~ 14025 3625
@@ -4876,4 +4818,50 @@ F 4 "123-5041 " H 550 1850 50  0001 C CNN "RS"
 	1    550  1850
 	1    0    0    -1  
 $EndComp
+Text Label 7975 2675 2    50   ~ 0
+FIRE_DIST
+Wire Wire Line
+	7600 2525 8275 2525
+Text Label 7975 5225 2    50   ~ 0
+FIRE_DIST
+Wire Wire Line
+	7600 5075 8275 5075
+Text Label 3025 5225 2    50   ~ 0
+FIRE_DIST
+Wire Wire Line
+	2650 5075 3325 5075
+Text Label 3025 7725 2    50   ~ 0
+FIRE_DIST
+Wire Wire Line
+	2650 7575 3325 7575
+Text Label 7975 7725 2    50   ~ 0
+FIRE_DIST
+Wire Wire Line
+	7600 7575 8275 7575
+NoConn ~ 12825 5525
+NoConn ~ 14025 4025
+NoConn ~ 14025 4125
+NoConn ~ 14025 4225
+NoConn ~ 14025 4325
+NoConn ~ 14025 4425
+NoConn ~ 14025 6125
+NoConn ~ 14025 3925
+NoConn ~ 14025 5925
+NoConn ~ 14025 1725
+$Comp
+L voltages:24v #PWR?
+U 1 1 5CA17557
+P 3250 2750
+F 0 "#PWR?" H 3250 2860 50  0001 L CNN
+F 1 "24v" H 3250 2850 50  0000 C CNN
+F 2 "" H 3250 2750 50  0001 C CNN
+F 3 "" H 3250 2750 50  0001 C CNN
+	1    3250 2750
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2925 2600 3625 2600
+Wire Wire Line
+	3250 2750 3325 2750
+Connection ~ 3325 2750
 $EndSCHEMATC
