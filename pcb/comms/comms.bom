@@ -1,0 +1,97 @@
+Bill Of Materials
+=================
+
+Source file: comms.xml
+Date: 2018-11-09T17:21:35.502624
+
+Parts Missing Footprints
+------------------------
+X7     Case           
+X4     RJ45 Cap       
+X3     RJ45 Conn      
+X2     USB Cap        
+X1     USB Conn       
+
+Parts Missing Order Codes
+-------------------------
+TP1    TESTPAD         agg:TESTPAD
+P2     SWD_TC          agg:TC2030-NL
+X5     Hole            agg:M3_MOUNT
+X6     Hole            agg:M3_MOUNT
+X8     Hole            agg:M3_MOUNT
+X9     Hole            agg:M3_MOUNT
+
+Inconsistent Order Codes
+------------------------
+  Farnell
+  ~~~~~~~
+    1830747: 
+      J3     5v In           agg:S02B-PASK-2
+      J4     5v Out          agg:S02B-PASK-2
+    1830748: 
+      J2     UART2           agg:S03B-PASK-2
+      J1     UART1           agg:S03B-PASK-2
+
+Vendor Specific BOMs
+--------------------
+  RS
+  ~~
+122-3021,1,,1x--USB Conn--None--X1
+125-7930,1,,1x--USB Cap--None--X2
+125-7926,1,,1x--RJ45 Cap--None--X4
+111-6745,1,,1x--RJ45 Conn--None--X3
+
+
+  Farnell
+  ~~~~~~~
+1830747,2,2x 5v In 5v Out S02B-PASK-2
+2616742,4,4x 100R 0603
+2122112,2,2x 0R 0603
+2362088,2,2x 2u2 0402
+2496790,2,2x 10p 0402
+2290328,2,2x LED 0603-LED
+2506952,1,1x 26M XTAL-20x16
+2496771,9,9x 100n 0402
+1462758,1,1x RJHSE-538x RJHSE-538X
+2140682,1,1x 120R 0402
+1830748,2,2x UART1 UART2 S03B-PASK-2
+2496814,1,1x 1u 0402
+9239111,1,1x 100 0402
+2426952,1,1x 4u7 0402
+9287787,1,1x Case None
+2496825,1,1x 10n 0603-L
+1865556,3,3x 1u 0603-L
+2067775,1,1x ADP3335 MSOP-8
+2528531,1,1x MAX14787E SOIC-8
+1753809,1,1x USB-B USB-B-SKT
+2333377,1,1x STM32F437VIT6 LQFP-100
+
+
+Assembly BOM
+------------
+122-3021             1   USB Conn        None            X1
+125-7930             1   USB Cap         None            X2
+125-7926             1   RJ45 Cap        None            X4
+111-6745             1   RJ45 Conn       None            X3
+1830747              2   5v In,5v Out    S02B-PASK-2     J3 J4
+2616742              4   100R            0603            R4 R5 R6 R7
+2122112              2   0R              0603            R2 R8
+2362088              2   2u2             0402            C12 C13
+2496790              2   10p             0402            C1 C2
+2290328              2   LED             0603-LED        D1 D2
+2506952              1   26M             XTAL-20x16      Y1
+2496771              9   100n            0402            C10 C11 C15 C19 C4 C5 C6 C8 C9
+1462758              1   RJHSE-538x      RJHSE-538X      IC4
+2140682              1   120R            0402            R3
+1830748              2   UART1,UART2     S03B-PASK-2     J1 J2
+2496814              1   1u              0402            C7
+9239111              1   100             0402            R1
+2426952              1   4u7             0402            C3
+9287787              1   Case            None            X7
+2496825              1   10n             0603-L          C16
+1865556              3   1u              0603-L          C14 C17 C18
+2067775              1   ADP3335         MSOP-8          IC2
+2528531              1   MAX14787E       SOIC-8          IC3
+1753809              1   USB-B           USB-B-SKT       P1
+2333377              1   STM32F437VIT6   LQFP-100        IC1
+
