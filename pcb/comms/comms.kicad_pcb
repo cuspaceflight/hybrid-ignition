@@ -31,7 +31,7 @@
   )
 
   (setup
-    (last_trace_width 0.25)
+    (last_trace_width 0.2)
     (user_trace_width 0.2)
     (user_trace_width 0.25)
     (user_trace_width 0.3)
@@ -2327,7 +2327,7 @@
       (net 7 GND))
   )
 
-  (gr_text "Hybrid Ignition Controller" (at 32 79) (layer F.SilkS) (tstamp 5BE87C36)
+  (gr_text "Hybrid Ignition Controller" (at 32 75.75) (layer F.SilkS) (tstamp 5BE87C36)
     (effects (font (size 2 2) (thickness 0.3) italic) (justify left))
   )
   (gr_text B (at 68 110) (layer F.SilkS) (tstamp 5BE87C2B)
@@ -2363,7 +2363,7 @@
   (gr_text BANK (at 57.5 107) (layer F.SilkS) (tstamp 5BE876DD)
     (effects (font (size 1.5 1.5) (thickness 0.3)))
   )
-  (gr_text "Communications Board" (at 32 76) (layer F.SilkS) (tstamp 5BE875DD)
+  (gr_text "Communications Board" (at 32 79) (layer F.SilkS) (tstamp 5BE875DD)
     (effects (font (size 2 2) (thickness 0.4)) (justify left))
   )
   (gr_text 11/11/18 (at 32.258302 119.4164) (layer F.SilkS) (tstamp 5BE86081)
