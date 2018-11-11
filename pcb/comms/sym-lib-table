@@ -1,5 +1,5 @@
 (sym_lib_table
-  (lib (name agg-kicad)(type Legacy)(uri /home/matt/Documents/agg-kicad/agg-kicad.lib)(options "")(descr ""))
+  (lib (name agg-kicad)(type Legacy)(uri "$(KIPRJMOD)/../../agg-kicad/agg-kicad.lib")(options "")(descr ""))
   (lib (name relay_spst)(type Legacy)(uri /home/matt/Documents/hybrid-ignition/pcb/lib/relay_spst.lib)(options "")(descr ""))
   (lib (name voltages)(type Legacy)(uri /home/matt/Documents/hybrid-ignition/pcb/lib/voltages.lib)(options "")(descr ""))
 )

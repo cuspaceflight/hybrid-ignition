@@ -2,7 +2,7 @@ Bill Of Materials
 =================
 
 Source file: comms.xml
-Date: 2018-11-09T17:21:35.502624
+Date: 2018-11-11T17:09:33.339369
 
 Parts Missing Footprints
 ------------------------
@@ -25,9 +25,6 @@ Inconsistent Order Codes
 ------------------------
   Farnell
   ~~~~~~~
-    1830747: 
-      J3     5v In           agg:S02B-PASK-2
-      J4     5v Out          agg:S02B-PASK-2
     1830748: 
       J2     UART2           agg:S03B-PASK-2
       J1     UART1           agg:S03B-PASK-2
@@ -44,9 +41,9 @@ Vendor Specific BOMs
 
   Farnell
   ~~~~~~~
-1830747,2,2x 5v In 5v Out S02B-PASK-2
+1830747,1,1x 5v In S02B-PASK-2
 2616742,4,4x 100R 0603
-2122112,2,2x 0R 0603
+2122112,1,1x 0R 0603
 2362088,2,2x 2u2 0402
 2496790,2,2x 10p 0402
 2290328,2,2x LED 0603-LED
@@ -73,9 +70,9 @@ Assembly BOM
 125-7930             1   USB Cap         None            X2
 125-7926             1   RJ45 Cap        None            X4
 111-6745             1   RJ45 Conn       None            X3
-1830747              2   5v In,5v Out    S02B-PASK-2     J3 J4
+1830747              1   5v In           S02B-PASK-2     J3
 2616742              4   100R            0603            R4 R5 R6 R7
-2122112              2   0R              0603            R2 R8
+2122112              1   0R              0603            R2
 2362088              2   2u2             0402            C12 C13
 2496790              2   10p             0402            C1 C2
 2290328              2   LED             0603-LED        D1 D2
