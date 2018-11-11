@@ -2,16 +2,16 @@
 <export version="D">
   <design>
     <source>/home/matt/Documents/hybrid-ignition/pcb/ignition/ignition.sch</source>
-    <date>Wed 07 Nov 2018 23:53:52 GMT</date>
+    <date>Sun 11 Nov 2018 18:31:30 GMT</date>
     <tool>Eeschema 5.0.1-33cea8e~68~ubuntu18.04.1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
-        <title>Valve Controller</title>
-        <company>Matt Coates</company>
+        <title>Ignition Board</title>
+        <company>Matthew Coates</company>
         <rev>1</rev>
-        <date>2018-11-03</date>
+        <date>2018-11-11</date>
         <source>ignition.sch</source>
-        <comment number="1" value=""/>
+        <comment number="1" value="Hybrid Ignition Controller"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -1089,7 +1089,7 @@
       <tstamp>5BE19339</tstamp>
     </comp>
     <comp ref="C18">
-      <value>2µ2</value>
+      <value>2u2</value>
       <footprint>agg:0402</footprint>
       <fields>
         <field name="Farnell">2362088</field>
@@ -1099,7 +1099,7 @@
       <tstamp>5BE19348</tstamp>
     </comp>
     <comp ref="C17">
-      <value>2µ2</value>
+      <value>2u2</value>
       <footprint>agg:0402</footprint>
       <fields>
         <field name="Farnell">2362088</field>
@@ -1109,7 +1109,7 @@
       <tstamp>5BE19350</tstamp>
     </comp>
     <comp ref="C12">
-      <value>1µ</value>
+      <value>1u</value>
       <footprint>agg:0402</footprint>
       <fields>
         <field name="Farnell">2496814</field>
@@ -1119,7 +1119,7 @@
       <tstamp>5BE19364</tstamp>
     </comp>
     <comp ref="C8">
-      <value>4µ7</value>
+      <value>4u7</value>
       <footprint>agg:0402</footprint>
       <fields>
         <field name="Farnell">2426952</field>

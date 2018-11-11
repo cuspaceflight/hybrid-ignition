@@ -2,7 +2,7 @@ Bill Of Materials
 =================
 
 Source file: ignition.xml
-Date: 2018-11-07T23:53:52.684947
+Date: 2018-11-11T18:31:30.470343
 
 Parts Missing Footprints
 ------------------------
@@ -65,9 +65,6 @@ Inconsistent Order Codes
       J12    ARM             agg:S02B-PASK-2
       J5     5v In           agg:S02B-PASK-2
       J6     5v Out          agg:S02B-PASK-2
-    1830748: 
-      J14    UART2           agg:S03B-PASK-2
-      J13    UART1           agg:S03B-PASK-2
     172316-1104: 
       J1     PSU             ignition:172316-1104
       J10    CH2             ignition:172316-1104
@@ -75,53 +72,22 @@ Inconsistent Order Codes
       J16    CH3             ignition:172316-1104
       J11    CH4             ignition:172316-1104
       J17    CH5             ignition:172316-1104
+    1830748: 
+      J14    UART2           agg:S03B-PASK-2
+      J13    UART1           agg:S03B-PASK-2
 
 Vendor Specific BOMs
 --------------------
+  RS
+  ~~
+123-5041 ,6,,6x--Molex Wire--None--X30X19X16X27X24X1
+
+
   Digikey
   ~~~~~~~
-1,1145-1076-ND,1x 24V PSU None X12
 6,LTC4151CMS-1#PBF-ND,6x LTC4151 MSOP-10 IC3 IC4 IC1 IC5 IC2 IC6
 1,1145-1128-ND,1x 5V PSU None X13
-
-
-  Farnell
-  ~~~~~~~
-1107429,1,1x 0.01R 2512
-2616742,9,9x 100R 0603
-2138501,13,13x 110k 0603
-2053833,6,6x NFET SOT-23
-1770616,6,6x 16A SPST RT33L024
-1510671,5,5x D SOD-123F
-2452032,6,6x SCHOTTKY SOD-123FL
-1435950,5,5x 0.05R 2512
-2332016,12,12x 10k 0603
-1469740,9,9x 1k 0603
-1830747,8,8x LED5 5v Out LED4 ARM LED2 L
-2447400,5,5x 56R 0603
-2335726,5,5x GRN LED None
-51-235.025D2,1,1x Key Switch None
-2334072,1,1x AC Input None
-1581207,1,1x Bi-LED None
-2408407,2,2x 10u 1206
-9239111,1,1x 100 0402
-2506952,1,1x 26M XTAL-20x16
-2496790,2,2x 10p 0402
-2362088,2,2x 2µ2 0402
-2496814,1,1x 1µ 0402
-2426952,1,1x 4µ7 0402
-2496771,9,9x 100n 0402
-2358234,1,1x MICROSD MICROSD_MOLEX_50339
-9238689,5,5x 47k 0603-L
-2067775,1,1x ADP3335 MSOP-8
-2496825,1,1x 10n 0603-L
-1865556,2,2x 1u 0603-L
-1830748,2,2x UART1 UART2 S03B-PASK-2
-2290328,2,2x LED 0603-LED
-2333377,1,1x STM32F437VIT6 LQFP-100
-2723656,5,5x M12 Plug None
-2627740,5,5x M12 Socket None
-172316-1104,7,7x CH1 CH4 CH2 CH5 PSU CH3 172
+1,1145-1076-ND,1x 24V PSU None X12
 
 
   CPC
@@ -129,51 +95,85 @@ Vendor Specific BOMs
 SC11628,6,6x X3 X5 X7 X11 X15 X23 None
 
 
-  RS
-  ~~
-123-5041 ,6,,6x--Molex Wire--None--X30X19X16X27X24X1
+  Farnell
+  ~~~~~~~
+9238689,5,5x 47k 0603-L
+1435950,5,5x 0.05R 2512
+2447400,5,5x 56R 0603
+2067775,1,1x ADP3335 MSOP-8
+1865556,2,2x 1u 0603-L
+2616742,9,9x 100R 0603
+1770616,6,6x 16A SPST RT33L024
+2496790,2,2x 10p 0402
+1107429,1,1x 0.01R 2512
+172316-1104,7,7x CH1 CH2 CH3 CH4 CH5 PSU 172
+2053833,6,6x NFET SOT-23
+2452032,6,6x SCHOTTKY SOD-123FL
+2723656,5,5x M12 Plug None
+2358234,1,1x MICROSD MICROSD_MOLEX_50339
+2496814,1,1x 1u 0402
+1830747,8,8x LED1 LED3 LED2 LED5 LED4 5v
+2362088,2,2x 2u2 0402
+2138501,13,13x 110k 0603
+2290328,2,2x LED 0603-LED
+2496771,9,9x 100n 0402
+2408407,2,2x 10u 1206
+1830748,2,2x UART1 UART2 S03B-PASK-2
+2627740,5,5x M12 Socket None
+9239111,1,1x 100 0402
+2332016,12,12x 10k 0603
+1510671,5,5x D SOD-123F
+1581207,1,1x Bi-LED None
+2335726,5,5x GRN LED None
+51-235.025D2,1,1x Key Switch None
+2333377,1,1x STM32F437VIT6 LQFP-100
+2334072,1,1x AC Input None
+2506952,1,1x 26M XTAL-20x16
+1469740,9,9x 1k 0603
+2426952,1,1x 4u7 0402
+2496825,1,1x 10n 0603-L
 
 
 Assembly BOM
 ------------
-1145-1076-ND         1   24V PSU         None            X12
+123-5041             6   Molex Wire      None            X1 X16 X19 X24 X27 X30
 LTC4151CMS-1#PBF-ND  6   LTC4151         MSOP-10         IC1 IC2 IC3 IC4 IC5 IC6
 1145-1128-ND         1   5V PSU          None            X13
-1107429              1   0.01R           2512            R13
-2616742              9   100R            0603            R18 R19 R21 R27 R37 R42 R43 R44 R46
-2138501              13  110k            0603            R10 R14 R15 R16 R20 R3 R34 R35 R36 R38 R39 R40 R9
-2053833              6   NFET            SOT-23          Q1 Q2 Q3 Q4 Q5 Q6
-1770616              6   16A SPST        RT33L024        K1 K2 K3 K4 K5 K6
-1510671              5   D               SOD-123F        D11 D12 D13 D4 D5
-2452032              6   SCHOTTKY        SOD-123FL       D1 D2 D3 D6 D7 D8
+1145-1076-ND         1   24V PSU         None            X12
+SC11628              6   LED Bezel       None            X11 X15 X23 X3 X5 X7
+9238689              5   47k             0603-L          R55 R56 R57 R58 R59
 1435950              5   0.05R           2512            R31 R32 R33 R7 R8
-2332016              12  10k             0603            R11 R2 R25 R26 R28 R29 R30 R5 R52 R53 R54 R6
-1469740              9   1k              0603            R22 R23 R41 R45 R47 R48 R49 R50 R51
-1830747              8   LED5,5v Out,LED4,ARM,LED2,LED3,LED1,5v In S02B-PASK-2     J12 J2 J4 J5 J6 J7 J8 J9
 2447400              5   56R             0603            R1 R12 R17 R24 R4
+2067775              1   ADP3335         MSOP-8          IC7
+1865556              2   1u              0603-L          C3 C5
+2616742              9   100R            0603            R18 R19 R21 R27 R37 R42 R43 R44 R46
+1770616              6   16A SPST        RT33L024        K1 K2 K3 K4 K5 K6
+2496790              2   10p             0402            C6 C7
+1107429              1   0.01R           2512            R13
+172316-1104          7   CH1,CH2,CH3,CH4,CH5,PSU 172316-1104     J1 J10 J11 J15 J16 J17 J3
+2053833              6   NFET            SOT-23          Q1 Q2 Q3 Q4 Q5 Q6
+2452032              6   SCHOTTKY        SOD-123FL       D1 D2 D3 D6 D7 D8
+2723656              5   M12 Plug        None            X18 X21 X26 X29 X32
+2358234              1   MICROSD         MICROSD_MOLEX_503398-1892 U1
+2496814              1   1u              0402            C12
+1830747              8   LED1,LED3,LED2,LED5,LED4,5v In,ARM,5v Out S02B-PASK-2     J12 J2 J4 J5 J6 J7 J8 J9
+2362088              2   2u2             0402            C17 C18
+2138501              13  110k            0603            R10 R14 R15 R16 R20 R3 R34 R35 R36 R38 R39 R40 R9
+2290328              2   LED             0603-LED        D10 D9
+2496771              9   100n            0402            C10 C11 C13 C14 C15 C16 C19 C20 C9
+2408407              2   10u             1206            C1 C2
+1830748              2   UART1,UART2     S03B-PASK-2     J13 J14
+2627740              5   M12 Socket      None            X17 X20 X25 X28 X31
+9239111              1   100             0402            R60
+2332016              12  10k             0603            R11 R2 R25 R26 R28 R29 R30 R5 R52 R53 R54 R6
+1510671              5   D               SOD-123F        D11 D12 D13 D4 D5
+1581207              1   Bi-LED          None            X22
 2335726              5   GRN LED         None            X10 X14 X2 X4 X6
 51-235.025D2         1   Key Switch      None            X8
-2334072              1   AC Input        None            X9
-1581207              1   Bi-LED          None            X22
-2408407              2   10u             1206            C1 C2
-9239111              1   100             0402            R60
-2506952              1   26M             XTAL-20x16      Y1
-2496790              2   10p             0402            C6 C7
-2362088              2   2µ2             0402            C17 C18
-2496814              1   1µ              0402            C12
-2426952              1   4µ7             0402            C8
-2496771              9   100n            0402            C10 C11 C13 C14 C15 C16 C19 C20 C9
-2358234              1   MICROSD         MICROSD_MOLEX_503398-1892 U1
-9238689              5   47k             0603-L          R55 R56 R57 R58 R59
-2067775              1   ADP3335         MSOP-8          IC7
-2496825              1   10n             0603-L          C4
-1865556              2   1u              0603-L          C3 C5
-1830748              2   UART1,UART2     S03B-PASK-2     J13 J14
-2290328              2   LED             0603-LED        D10 D9
 2333377              1   STM32F437VIT6   LQFP-100        IC8
-2723656              5   M12 Plug        None            X18 X21 X26 X29 X32
-2627740              5   M12 Socket      None            X17 X20 X25 X28 X31
-172316-1104          7   CH1,CH4,CH2,CH5,PSU,CH3 172316-1104     J1 J10 J11 J15 J16 J17 J3
-SC11628              6   LED Bezel       None            X11 X15 X23 X3 X5 X7
-123-5041             6   Molex Wire      None            X1 X16 X19 X24 X27 X30
+2334072              1   AC Input        None            X9
+2506952              1   26M             XTAL-20x16      Y1
+1469740              9   1k              0603            R22 R23 R41 R45 R47 R48 R49 R50 R51
+2426952              1   4u7             0402            C8
+2496825              1   10n             0603-L          C4
 

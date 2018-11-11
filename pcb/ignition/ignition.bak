@@ -120,7 +120,7 @@ F 3 "" H 1425 2500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Notes 600  700  0    79   ~ 16
-External Power Supply:
+External Supply:
 Wire Wire Line
 	1425 2800 1525 2800
 $Comp
@@ -174,7 +174,7 @@ ADC Full Scale Range:\nVin: 102.4 V\nSense: 81.92 mV\nADIN: 2.048 V
 Text Notes 2525 2450 0    39   Italic 0
 Power Rating 1W
 Text Notes 1825 4275 0    50   ~ 0
-Sense Resistor Calcs:\nIs= 8.8 A\nVs = 8.8 x 0.01 = 88 mV\nPs = 8.8 x 8.8 x 0.01 = 0.77 W
+Sense Resistor Calcs:\nIs= 8.8 A (max)\nVs = 8.8 x 0.01 = 88 mV\nPs = 8.8 x 8.8 x 0.01 = 0.77 W
 Text Notes 3225 4125 0    50   ~ 0
 Voltage Divider Calcs:\nVo = 10/(110+10) x 24 = 2 V
 $Comp
@@ -473,17 +473,9 @@ F 3 "" H 2700 3725 50  0001 C CNN
 	1    2700 3725
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	3625 2600 3325 2600
 Connection ~ 2925 2600
 Wire Wire Line
 	3325 2750 3325 2850
-Wire Wire Line
-	3325 2750 3325 2600
-Connection ~ 3325 2750
-Connection ~ 3325 2600
-Wire Wire Line
-	3325 2600 2925 2600
 Wire Wire Line
 	1425 3675 1425 3400
 Connection ~ 1425 3400
@@ -4856,4 +4848,20 @@ NoConn ~ 14025 6125
 NoConn ~ 14025 3925
 NoConn ~ 14025 5925
 NoConn ~ 14025 1725
+$Comp
+L voltages:24v #PWR?
+U 1 1 5CA17557
+P 3250 2750
+F 0 "#PWR?" H 3250 2860 50  0001 L CNN
+F 1 "24v" H 3250 2850 50  0000 C CNN
+F 2 "" H 3250 2750 50  0001 C CNN
+F 3 "" H 3250 2750 50  0001 C CNN
+	1    3250 2750
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2925 2600 3625 2600
+Wire Wire Line
+	3250 2750 3325 2750
+Connection ~ 3325 2750
 $EndSCHEMATC

@@ -5,11 +5,11 @@ EELAYER END
 $Descr A3 16535 11693
 encoding utf-8
 Sheet 1 1
-Title "Valve Controller"
-Date "2018-11-03"
+Title "Ignition Board"
+Date "2018-11-11"
 Rev "1"
-Comp "Matt Coates"
-Comment1 ""
+Comp "Matthew Coates"
+Comment1 "Hybrid Ignition Controller"
 Comment2 ""
 Comment3 ""
 Comment4 ""
@@ -120,7 +120,7 @@ F 3 "" H 1425 2500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Notes 600  700  0    79   ~ 16
-External Power Supply:
+External Supply:
 Wire Wire Line
 	1425 2800 1525 2800
 $Comp
@@ -174,7 +174,7 @@ ADC Full Scale Range:\nVin: 102.4 V\nSense: 81.92 mV\nADIN: 2.048 V
 Text Notes 2525 2450 0    39   Italic 0
 Power Rating 1W
 Text Notes 1825 4275 0    50   ~ 0
-Sense Resistor Calcs:\nIs= 8.8 A\nVs = 8.8 x 0.01 = 88 mV\nPs = 8.8 x 8.8 x 0.01 = 0.77 W
+Sense Resistor Calcs:\nIs= 8.8 A (max)\nVs = 8.8 x 0.01 = 88 mV\nPs = 8.8 x 8.8 x 0.01 = 0.77 W
 Text Notes 3225 4125 0    50   ~ 0
 Voltage Divider Calcs:\nVo = 10/(110+10) x 24 = 2 V
 $Comp
@@ -2879,7 +2879,7 @@ L agg-kicad:C C18
 U 1 1 5BE19348
 P 12725 2225
 F 0 "C18" H 12775 2165 31  0000 C CNN
-F 1 "2µ2" H 12775 2285 31  0000 C CNN
+F 1 "2u2" H 12775 2285 31  0000 C CNN
 F 2 "agg:0402" H 12725 2225 50  0001 C CNN
 F 3 "" H 12725 2225 50  0001 C CNN
 F 4 "2362088" H 12725 2225 60  0001 C CNN "Farnell"
@@ -2891,7 +2891,7 @@ L agg-kicad:C C17
 U 1 1 5BE19350
 P 12575 2325
 F 0 "C17" H 12625 2265 31  0000 C CNN
-F 1 "2µ2" H 12625 2385 31  0000 C CNN
+F 1 "2u2" H 12625 2385 31  0000 C CNN
 F 2 "agg:0402" H 12575 2325 50  0001 C CNN
 F 3 "" H 12575 2325 50  0001 C CNN
 F 4 "2362088" H 12575 2325 60  0001 C CNN "Farnell"
@@ -2925,7 +2925,7 @@ L agg-kicad:C C12
 U 1 1 5BE19364
 P 12325 2025
 F 0 "C12" H 12375 2095 31  0000 C CNN
-F 1 "1µ" H 12375 1955 31  0000 C CNN
+F 1 "1u" H 12375 1955 31  0000 C CNN
 F 2 "agg:0402" H 12325 2025 50  0001 C CNN
 F 3 "" H 12325 2025 50  0001 C CNN
 F 4 "2496814" H 12325 2025 60  0001 C CNN "Farnell"
@@ -2937,7 +2937,7 @@ L agg-kicad:C C8
 U 1 1 5BE1936C
 P 12325 1225
 F 0 "C8" H 12375 1285 31  0000 C CNN
-F 1 "4µ7" H 12375 1165 31  0000 C CNN
+F 1 "4u7" H 12375 1165 31  0000 C CNN
 F 2 "agg:0402" H 12325 1225 50  0001 C CNN
 F 3 "" H 12325 1225 50  0001 C CNN
 F 4 "2426952" H 12325 1225 31  0001 C CNN "Farnell"
@@ -4849,10 +4849,10 @@ NoConn ~ 14025 3925
 NoConn ~ 14025 5925
 NoConn ~ 14025 1725
 $Comp
-L voltages:24v #PWR?
+L voltages:24v #PWR0101
 U 1 1 5CA17557
 P 3250 2750
-F 0 "#PWR?" H 3250 2860 50  0001 L CNN
+F 0 "#PWR0101" H 3250 2860 50  0001 L CNN
 F 1 "24v" H 3250 2850 50  0000 C CNN
 F 2 "" H 3250 2750 50  0001 C CNN
 F 3 "" H 3250 2750 50  0001 C CNN
