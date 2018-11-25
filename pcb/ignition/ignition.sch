@@ -4423,7 +4423,7 @@ F 0 "J10" H 4875 5275 50  0000 C CNN
 F 1 "CH2" H 4825 4775 50  0000 C CNN
 F 2 "ignition:172316-1104" H 4900 5175 50  0001 C CNN
 F 3 "https://www.molex.com/pdm_docs/sd/1723161104_sd.pdf" H 4900 5175 50  0001 C CNN
-F 4 "172316-1104" H 4900 5175 50  0001 C CNN "Farnell"
+F 4 "2494369" H 4900 5175 50  0001 C CNN "Farnell"
 	1    4900 5175
 	-1   0    0    -1  
 $EndComp
