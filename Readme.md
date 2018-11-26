@@ -1,4 +1,4 @@
-#Hybrid Rocket Engine Ignition System
+# Hybrid Rocket Engine Ignition System
 
 This project is controller for CU Spaceflight's hybrid rocket engine, Pulsar.
 
