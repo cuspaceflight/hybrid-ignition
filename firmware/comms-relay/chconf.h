@@ -59,7 +59,7 @@
 #define CH_CFG_ST_TIMEDELTA                 0
 
 /* Enable wait-for-interrupt sleep during idle */
-#define CORTEX_ENABLE_WFI_IDLE TRUE
+#define CORTEX_ENABLE_WFI_IDLE    FALSE
 
 /** @} */
 

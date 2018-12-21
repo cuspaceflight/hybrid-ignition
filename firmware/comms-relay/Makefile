@@ -112,7 +112,7 @@ CSRC = $(STARTUPSRC) \
        $(HALSRC) \
        $(PLATFORMSRC) \
        $(BOARDSRC) \
-       main.c
+       main.c usbcfg.c usbserial.c
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
@@ -144,7 +144,7 @@ ASMSRC = $(STARTUPASM) $(PORTASM) $(OSALASM)
 INCDIR = $(STARTUPINC) $(KERNINC) $(PORTINC) $(OSALINC) \
          $(HALINC) $(PLATFORMINC) $(BOARDINC) $(TESTINC) \
          $(CHIBIOS)/os/various
-         
+
 #
 # Project, sources and paths
 ##############################################################################
@@ -219,7 +219,7 @@ include $(RULESPATH)/rules.mk
 #
 flash: build/$(PROJECT).elf
 	arm-none-eabi-gdb --batch \
-		              -ex 'target extended-remote /dev/ttyACM0' \
+		              -ex 'target extended-remote /dev/ttyACM1' \
 					  -ex 'monitor version' \
 					  -ex 'monitor swdp_scan' \
 					  -ex 'attach 1' \
@@ -227,17 +227,17 @@ flash: build/$(PROJECT).elf
 
 power:
 	arm-none-eabi-gdb --batch \
-	                  -ex 'target extended-remote /dev/ttyACM0' \
+	                  -ex 'target extended-remote /dev/ttyACM1' \
 		              -ex 'monitor tpwr enable'
 		              
 unpower:
 	arm-none-eabi-gdb --batch \
-	                  -ex 'target extended-remote /dev/ttyACM0' \
+	                  -ex 'target extended-remote /dev/ttyACM1' \
 		              -ex 'monitor tpwr diable'
 		              		                    
 					  
 debug: build/$(PROJECT).elf
-	arm-none-eabi-gdb -ex 'target extended-remote /dev/ttyACM0' \
+	arm-none-eabi-gdb -ex 'target extended-remote /dev/ttyACM1' \
 		              -ex 'monitor swdp_scan' \
 					  -ex 'attach 1' \
 					  -ex "file build/$(PROJECT).elf"

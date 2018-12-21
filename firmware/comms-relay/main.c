@@ -1,6 +1,8 @@
 #include "ch.h"
 #include "hal.h"
 
+#include "usbserial.h"
+
 
 int main(void) {
 
@@ -11,7 +13,7 @@ int main(void) {
     halInit();
     chSysInit();
 
-    palSetLine(LINE_STATUS);
-    palSetLine(LINE_LED2);
-    palSetLine(LINE_LED1);
+    usbserial_init();
+
+    chThdSleep(TIME_INFINITE);
 }
