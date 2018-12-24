@@ -11,7 +11,7 @@
 /* Serial Setup 
 static SerialDriver* rs422_seriald;
 static SerialConfig serial_cfg = {
-    .speed = 19200,
+    .speed = 115200,
     .cr1 = 0,
     .cr2 = 0,
     .cr3 = 0,
@@ -26,18 +26,19 @@ static THD_FUNCTION(RouterThread, arg) {
     
     packet tmp_data;
 
-    //uint8_t buff[3] = {0xAA, 0xBB, 0xCC};
     //rs422_seriald = &SD3;
     //sdStart(rs422_seriald, &serial_cfg);
     
     
     while(true){
 
+        palToggleLine(LINE_STATUS);
+
         /* USB Loopback Test */
         if(get_packet_usb(&tmp_data)){
             send_packet_usb(&tmp_data);
         }
-        //sdWriteTimeout(rs422_seriald, buff, 3, MS2ST(100));    
+        //sdWrite(rs422_seriald, buff, 3);
     }
 }
 
@@ -46,5 +47,5 @@ static THD_FUNCTION(RouterThread, arg) {
 
 /* Start Packet Router Thread */
 void router_init(void) {
-    chThdCreateStatic(waRouterThread, sizeof(waRouterThread), NORMALPRIO, RouterThread, NULL);
+    chThdCreateStatic(waRouterThread, sizeof(waRouterThread), HIGHPRIO, RouterThread, NULL);
 }

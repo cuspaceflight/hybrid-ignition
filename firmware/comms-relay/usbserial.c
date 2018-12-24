@@ -21,21 +21,21 @@ static mailbox_t usb_tx_mailbox;
 static mailbox_t usb_rx_mailbox;
 
 /* Statically allocated memory used for the memory pool */
-static volatile char usb_mempool_buffer[USB_MEMPOOL_ITEMS * sizeof(packet)]
+static volatile char usb_mempool_buffer[USB_MEMPOOL_ITEMS * sizeof(packet)];
                      __attribute__((aligned(sizeof(stkalign_t))))
-                     __attribute__((section(".ram0")));
+                     //__attribute__((section(".ram0")));
 
 /* Statically allocated memory used for the queue in mailbox */
-static volatile msg_t usb_rx_mailbox_buffer[USB_MEMPOOL_ITEMS]
-                      __attribute__((section(".ram0")));
-static volatile msg_t usb_tx_mailbox_buffer[USB_MEMPOOL_ITEMS]
-                      __attribute__((section(".ram0")));
+static volatile msg_t usb_rx_mailbox_buffer[USB_MEMPOOL_ITEMS];
+                     // __attribute__((section(".ram0")));
+static volatile msg_t usb_tx_mailbox_buffer[USB_MEMPOOL_ITEMS];
+                     // __attribute__((section(".ram0")));
 
 
 
 
 /* USB Serial TX Thread */
-static THD_WORKING_AREA(waUSBTXThread, 2048);
+static THD_WORKING_AREA(waUSBTXThread, 4096);
 static THD_FUNCTION(USBTXThread, arg) {
 
     (void)arg;
@@ -85,7 +85,7 @@ static THD_FUNCTION(USBTXThread, arg) {
 
 
 /* USB Serial RX Thread */
-static THD_WORKING_AREA(waUSBRXThread, 2048);
+static THD_WORKING_AREA(waUSBRXThread, 4096);
 static THD_FUNCTION(USBRXThread, arg) {
 
     (void)arg;
@@ -95,10 +95,11 @@ static THD_FUNCTION(USBRXThread, arg) {
     msg_t retval;    
     
     /* RX Buffer */
+    bool packet_detect = false;
     int rx_bufidx = 0;
     uint8_t rx_buf[128];
 
-    /* Recieve over USB Assemble Packets */
+    /* Recieve over Bytes USB */
     while(true) {
         
         uint8_t c = chnGetTimeout(&SDU1, TIME_INFINITE);
@@ -106,21 +107,28 @@ static THD_FUNCTION(USBRXThread, arg) {
         /* Handle Start Byte */
         if(c == 0x7E) {
             rx_bufidx = 0;
+            packet_detect = true;
             continue;
         }
 
         /* Handle Escape Character */
-        if(c == 0x7D) {
+        if((c == 0x7D) && packet_detect) {
             c = chnGetTimeout(&SDU1, TIME_INFINITE) ^ 0x20;
         }
 
         /* Put Byte in Buffer */
-        rx_buf[rx_bufidx++] = c;
+        if(packet_detect){
+            rx_buf[rx_bufidx++] = c;
+        }
 
         /* Full Packet Recieved */
-        if(rx_bufidx == sizeof(packet)) {
+        if(rx_bufidx == 128) {
+
+            /* Zero Counter */
+            rx_bufidx = 0;
+            packet_detect = false;
             
-            /* Allocate Space for Packet */
+            /* Allocate Space for Packet if Avaliable */
             msg = chPoolAlloc(&usb_mempool);
             if (msg == NULL) continue;
             
@@ -133,8 +141,6 @@ static THD_FUNCTION(USBRXThread, arg) {
                 chPoolFree(&usb_mempool, msg);
                 continue;
             }
-
-            rx_bufidx = 0;
         }
     }
 }
