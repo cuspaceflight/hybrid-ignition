@@ -32,7 +32,7 @@ static THD_FUNCTION(RouterThread, arg) {
     
     while(true){
 
-        palToggleLine(LINE_STATUS);
+        palToggleLine(LINE_LED2);
 
         /* USB Loopback Test */
         if(get_packet_usb(&tmp_data)){

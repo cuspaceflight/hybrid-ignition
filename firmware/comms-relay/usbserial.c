@@ -21,15 +21,15 @@ static mailbox_t usb_tx_mailbox;
 static mailbox_t usb_rx_mailbox;
 
 /* Statically allocated memory used for the memory pool */
-static volatile char usb_mempool_buffer[USB_MEMPOOL_ITEMS * sizeof(packet)];
-                     __attribute__((aligned(sizeof(stkalign_t))))
-                     //__attribute__((section(".ram0")));
+static volatile char usb_mempool_buffer[USB_MEMPOOL_ITEMS * sizeof(packet)]
+                    __attribute__((aligned(sizeof(stkalign_t))))
+                    __attribute__((section(".ram0")));
 
 /* Statically allocated memory used for the queue in mailbox */
-static volatile msg_t usb_rx_mailbox_buffer[USB_MEMPOOL_ITEMS];
-                     // __attribute__((section(".ram0")));
-static volatile msg_t usb_tx_mailbox_buffer[USB_MEMPOOL_ITEMS];
-                     // __attribute__((section(".ram0")));
+static volatile msg_t usb_rx_mailbox_buffer[USB_MEMPOOL_ITEMS]
+                    __attribute__((section(".ram0")));
+static volatile msg_t usb_tx_mailbox_buffer[USB_MEMPOOL_ITEMS]
+                    __attribute__((section(".ram0")));
 
 
 
@@ -99,7 +99,7 @@ static THD_FUNCTION(USBRXThread, arg) {
     int rx_bufidx = 0;
     uint8_t rx_buf[128];
 
-    /* Recieve over Bytes USB */
+    /* Recieve Bytes over USB */
     while(true) {
         
         uint8_t c = chnGetTimeout(&SDU1, TIME_INFINITE);
@@ -155,7 +155,7 @@ bool get_packet_usb(packet *pkt) {
     intptr_t data_msg;
 
     /* Check for Recieved Packet */
-    mailbox_res = chMBFetch(&usb_rx_mailbox, (msg_t*)&data_msg, MS2ST(100));
+    mailbox_res = chMBFetch(&usb_rx_mailbox, (msg_t*)&data_msg, TIME_IMMEDIATE);
 
     /* Pass Recieved Packet if Avaliable */
     if (mailbox_res != MSG_OK || data_msg == 0) {
