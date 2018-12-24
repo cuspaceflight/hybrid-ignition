@@ -1,6 +1,7 @@
 #include "ch.h"
 #include "hal.h"
 
+#include "rs422.h"
 #include "router.h"
 #include "usbserial.h"
 
@@ -16,6 +17,9 @@ int main(void) {
 
     /* Initialise USB Serial */
     usbserial_init();
+
+    /* Initialise RS422 */
+    rs422_init(&SD3);
 
     /* Initialise Packet Router  */
     router_init();

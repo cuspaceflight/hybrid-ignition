@@ -3,40 +3,47 @@
 
 #include <string.h>
 
+#include "rs422.h"
 #include "packets.h"
-#include "usbcfg.h"
-#include "usbserial.h"
 
-#define USB_MEMPOOL_ITEMS 64
+#define RS422_MEMPOOL_ITEMS 64
+
+/* Serial Config */
+static SerialDriver* rs422_seriald;
+static SerialConfig serial_cfg = {
+    .speed = 115200,
+    .cr1 = 0,
+    .cr2 = 0,
+    .cr3 = 0,
+};
 
 /* Function Prototypes */
 static void mem_init(void);
-static void usb_driver_init(void);
 
 /* Memory pool to store incoming/outgoing packets */
-static memory_pool_t usb_mempool;
+static memory_pool_t rs422_mempool;
 
 /* Mailbox for storing pointers to queued data */
-static mailbox_t usb_tx_mailbox;
-static mailbox_t usb_rx_mailbox;
+static mailbox_t rs422_tx_mailbox;
+static mailbox_t rs422_rx_mailbox;
 
 /* Statically allocated memory used for the memory pool */
-static volatile char usb_mempool_buffer[USB_MEMPOOL_ITEMS * sizeof(packet)]
+static volatile char rs422_mempool_buffer[RS422_MEMPOOL_ITEMS * sizeof(packet)]
                     __attribute__((aligned(sizeof(stkalign_t))))
                     __attribute__((section(".ram0")));
 
 /* Statically allocated memory used for the queue in mailbox */
-static volatile msg_t usb_rx_mailbox_buffer[USB_MEMPOOL_ITEMS]
+static volatile msg_t rs422_rx_mailbox_buffer[RS422_MEMPOOL_ITEMS]
                     __attribute__((section(".ram0")));
-static volatile msg_t usb_tx_mailbox_buffer[USB_MEMPOOL_ITEMS]
+static volatile msg_t rs422_tx_mailbox_buffer[RS422_MEMPOOL_ITEMS]
                     __attribute__((section(".ram0")));
 
 
 
 
-/* USB Serial TX Thread */
-static THD_WORKING_AREA(waUSBTXThread, 4096);
-static THD_FUNCTION(USBTXThread, arg) {
+/* RS422 TX Thread */
+static THD_WORKING_AREA(waRS422TXThread, 2048);
+static THD_FUNCTION(RS422TXThread, arg) {
 
     (void)arg;
     
@@ -49,11 +56,11 @@ static THD_FUNCTION(USBTXThread, arg) {
     uint8_t tx_buf[256];
     size_t tx_bufidx = 0;  
     
-    /* Fetch Packets & Send over USB */
+    /* Fetch Packets & Send over RS422 */
     while (true) {
 
         /* Wait for message to be avaliable */
-        mailbox_res = chMBFetch(&usb_tx_mailbox, (msg_t*)&data_msg, MS2ST(50));
+        mailbox_res = chMBFetch(&rs422_tx_mailbox, (msg_t*)&data_msg, MS2ST(50));
 
         /* Re-attempt if mailbox was reset or fetch failed */
         if (mailbox_res != MSG_OK || data_msg == 0) continue;
@@ -75,18 +82,21 @@ static THD_FUNCTION(USBTXThread, arg) {
             }
         }
 
-        /* TX Packet over USB */
-        chnWrite(&SDU1, tx_buf, tx_bufidx);
+        /* TX Packet over RS422 */
+        sdWrite(rs422_seriald, tx_buf, tx_bufidx);
         
+        palToggleLine(LINE_LED2);
+
         /* Free from Memory Pool */        
-        chPoolFree(&usb_mempool, (void*)data_msg);
+        chPoolFree(&rs422_mempool, (void*)data_msg);
     }  
 }
 
 
-/* USB Serial RX Thread */
-static THD_WORKING_AREA(waUSBRXThread, 4096);
-static THD_FUNCTION(USBRXThread, arg) {
+
+/* RS422 RX Thread */
+static THD_WORKING_AREA(waRS422RXThread, 2048);
+static THD_FUNCTION(RS422RXThread, arg) {
 
     (void)arg;
     
@@ -99,10 +109,10 @@ static THD_FUNCTION(USBRXThread, arg) {
     int rx_bufidx = 0;
     uint8_t rx_buf[128];
 
-    /* Recieve Bytes over USB */
+    /* Recieve Bytes over RS422 */
     while(true) {
         
-        uint8_t c = chnGetTimeout(&SDU1, TIME_INFINITE);
+        uint8_t c = sdGet(rs422_seriald);
         
         /* Handle Start Byte */
         if(c == 0x7E) {
@@ -113,7 +123,7 @@ static THD_FUNCTION(USBRXThread, arg) {
 
         /* Handle Escape Character */
         if((c == 0x7D) && packet_detect) {
-            c = chnGetTimeout(&SDU1, TIME_INFINITE) ^ 0x20;
+            c = sdGet(rs422_seriald) ^ 0x20;
         }
 
         /* Put Byte in Buffer */
@@ -129,16 +139,16 @@ static THD_FUNCTION(USBRXThread, arg) {
             packet_detect = false;
             
             /* Allocate Space for Packet if Avaliable */
-            msg = chPoolAlloc(&usb_mempool);
+            msg = chPoolAlloc(&rs422_mempool);
             if (msg == NULL) continue;
             
             /* Copy the packet into the mempool */
             memcpy(msg, (void*)rx_buf, sizeof(packet));
             
             /* Post the location of the packet into the mailbox */
-            retval = chMBPost(&usb_rx_mailbox, (intptr_t)msg, TIME_IMMEDIATE);
+            retval = chMBPost(&rs422_rx_mailbox, (intptr_t)msg, TIME_IMMEDIATE);
             if (retval != MSG_OK) {
-                chPoolFree(&usb_mempool, msg);
+                chPoolFree(&rs422_mempool, msg);
                 continue;
             }
         }
@@ -146,8 +156,8 @@ static THD_FUNCTION(USBRXThread, arg) {
 }
 
 
-/* Get a Packet Recieved over USB */
-bool get_packet_usb(packet *pkt) {
+/* Get a Packet Recieved over RS422 */
+bool get_packet_rs422(packet *pkt) {
 
     (void)pkt;
 
@@ -155,36 +165,36 @@ bool get_packet_usb(packet *pkt) {
     intptr_t data_msg;
 
     /* Check for Recieved Packet */
-    mailbox_res = chMBFetch(&usb_rx_mailbox, (msg_t*)&data_msg, MS2ST(50));
+    mailbox_res = chMBFetch(&rs422_rx_mailbox, (msg_t*)&data_msg, MS2ST(50));
 
     /* Pass Recieved Packet if Avaliable */
     if (mailbox_res != MSG_OK || data_msg == 0) {
         return false;
     } else {
         memcpy((void*)pkt, (void*)data_msg, sizeof(packet));
-        chPoolFree(&usb_mempool, (void*)data_msg);
+        chPoolFree(&rs422_mempool, (void*)data_msg);
         return true;
     }
 }
 
 
-/* Send a Packet over USB */
-bool send_packet_usb(packet *pkt) {
+/* Send a Packet over RS422 */
+bool send_packet_rs422(packet *pkt) {
 
     void* msg;
     msg_t retval;
 
     /* Allocate Space for Packet */
-    msg = chPoolAlloc(&usb_mempool);
+    msg = chPoolAlloc(&rs422_mempool);
     if (msg == NULL) return false;
     
     /* Copy the packet into the mempool */
     memcpy(msg, (void*)pkt, sizeof(packet));
     
     /* Post the location of the packet into the mailbox */
-    retval = chMBPost(&usb_tx_mailbox, (intptr_t)msg, TIME_IMMEDIATE);
+    retval = chMBPost(&rs422_tx_mailbox, (intptr_t)msg, TIME_IMMEDIATE);
     if (retval != MSG_OK) {
-        chPoolFree(&usb_mempool, msg);
+        chPoolFree(&rs422_mempool, msg);
         return false;
     } else {
         return true;
@@ -192,44 +202,31 @@ bool send_packet_usb(packet *pkt) {
 }
 
 
+
 /* Initialise Mailboxes and Memorypool */
 static void mem_init(void) {
     
-    chMBObjectInit(&usb_tx_mailbox, (msg_t*)usb_tx_mailbox_buffer, USB_MEMPOOL_ITEMS);
-    chMBObjectInit(&usb_rx_mailbox, (msg_t*)usb_rx_mailbox_buffer, USB_MEMPOOL_ITEMS);
-    chPoolObjectInit(&usb_mempool, sizeof(packet), NULL);
+    chMBObjectInit(&rs422_tx_mailbox, (msg_t*)rs422_tx_mailbox_buffer, RS422_MEMPOOL_ITEMS);
+    chMBObjectInit(&rs422_rx_mailbox, (msg_t*)rs422_rx_mailbox_buffer, RS422_MEMPOOL_ITEMS);
+    chPoolObjectInit(&rs422_mempool, sizeof(packet), NULL);
 
     /* Fill Memory Pool with Statically Allocated Bits of Memory */
-    chPoolLoadArray(&usb_mempool, (void*)usb_mempool_buffer, USB_MEMPOOL_ITEMS);
+    chPoolLoadArray(&rs422_mempool, (void*)rs422_mempool_buffer, RS422_MEMPOOL_ITEMS);
 }
 
 
-/* Initialise USB Driver */
-static void usb_driver_init(void) {   
 
-    /* Serial Driver Setup */
-    sduObjectInit(&SDU1);
-    sduStart(&SDU1, &serusbcfg);
+void rs422_init(SerialDriver* seriald){
 
-    /* USB Setup */
-    usbDisconnectBus(serusbcfg.usbp);
-    chThdSleepMilliseconds(1500);
-    usbStart(serusbcfg.usbp, &usbcfg);
-    usbConnectBus(serusbcfg.usbp); 
-    chThdSleepMilliseconds(1500);
+    /* Start Serial Driver */
+    rs422_seriald = seriald;
+    sdStart(rs422_seriald, &serial_cfg);
 
-    palSetLine(LINE_LED1);  
-}
-
-
-/* Start USB Serial Thread */
-void usbserial_init(void) {
-
-    /* Initalise Memory & USB Driver */
+    /* Initalise Memory */
     mem_init();
-    usb_driver_init();
 
-    /* Spawn TX & RX Threads */
-    chThdCreateStatic(waUSBTXThread, sizeof(waUSBTXThread), NORMALPRIO, USBTXThread, NULL);
-    chThdCreateStatic(waUSBRXThread, sizeof(waUSBRXThread), NORMALPRIO, USBRXThread, NULL);
+    /* Spawn TX/RX Threads */
+    chThdCreateStatic(waRS422TXThread, sizeof(waRS422TXThread), NORMALPRIO, RS422TXThread, NULL);
+    chThdCreateStatic(waRS422RXThread, sizeof(waRS422RXThread), NORMALPRIO, RS422RXThread, NULL);
+
 }

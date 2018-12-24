@@ -2,8 +2,7 @@ import serial
 import time
 import struct
 
-ser = serial.Serial(port="/dev/ttyACM0", baudrate = 115200, write_timeout=0, timeout=None)
-time.sleep(2)
+ser = serial.Serial(port="/dev/ttyACM2", baudrate = 9600, write_timeout=0, timeout=None)
 
 b = struct.pack('<B', 126)
 for i in range(0,128):
@@ -18,5 +17,5 @@ for i in range(0,128):
         b += struct.pack('<B', i)
     
 while True:
-    time.sleep(0.5)
+    time.sleep(0.05)
     ser.write(b)
