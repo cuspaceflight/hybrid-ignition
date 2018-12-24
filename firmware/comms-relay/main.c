@@ -1,6 +1,7 @@
 #include "ch.h"
 #include "hal.h"
 
+#include "router.h"
 #include "usbserial.h"
 
 
@@ -13,7 +14,12 @@ int main(void) {
     halInit();
     chSysInit();
 
+    /* Initialise USB Serial */
     usbserial_init();
 
+    /* Initialise Packet Router  */
+    router_init();
+
+    /* Do Nothing */
     chThdSleep(TIME_INFINITE);
 }

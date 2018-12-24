@@ -110,14 +110,6 @@ typedef struct __attribute__((packed)) {
 /*    CHANNEL STATUS    */
 
 
-/* PACKET PAYLOAD - Channel Status */
-typedef struct __attribute__((packed)) {
-
-    uint8_t         bank;
-    channel_status  ch_data[5];
-    
-} payload_channel_status;
-
 /* CHANNEL DATA */
 typedef struct __attribute__((packed)) {
 
@@ -127,5 +119,14 @@ typedef struct __attribute__((packed)) {
     uint16_t    resistance;
     
 } channel_status;
+
+
+/* PACKET PAYLOAD - Channel Status */
+typedef struct __attribute__((packed)) {
+
+    uint8_t         bank;
+    channel_status  ch_data[5];
+    
+} payload_channel_status;
 
 #endif
