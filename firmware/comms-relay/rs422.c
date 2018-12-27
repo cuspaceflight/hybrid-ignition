@@ -215,7 +215,7 @@ static void mem_init(void) {
 }
 
 
-
+/* Start RS422 Thread */
 void rs422_init(SerialDriver* seriald){
 
     /* Start Serial Driver */

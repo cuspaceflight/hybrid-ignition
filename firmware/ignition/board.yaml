@@ -1,0 +1,36 @@
+name: ignition
+lsefreq: 0
+hsefreq: 26000000
+voltage: 3.3
+mcutype: STM32F437xx
+default: input, pushpull, starthigh, pullup, highspeed
+pins:
+  SWDIO:        pa13, af0
+  SWCLK:        pa14, pulldown, af0
+
+  UART_MAIN_TX: pa9, af7
+  UART_MAIN_RX: pa10, af7
+
+  PSU_MON:      pa1, analog, floating
+  CH1_CONT:     pc0, analog, floating
+  CH2_CONT:     pc1, analog, floating
+  CH3_CONT:     pc2, analog, floating
+  CH4_CONT:     pc3, analog, floating
+  CH5_CONT:     pc4, analog, floating
+
+  ARM_SUPPLY:   pe2, output, pushpull, startlow, pulldown
+  CH1_FIRE:     pb1, output, pushpull, startlow, pulldown
+  CH2_FIRE:     pb2, output, pushpull, startlow, pulldown
+  CH3_FIRE:     pe7, output, pushpull, startlow, pulldown
+  CH4_FIRE:     pe8, output, pushpull, startlow, pulldown
+  CH5_FIRE:     pe9, output, pushpull, startlow, pulldown
+
+  I2C1_SCL:     pb8, af4, opendrain
+  I2C1_SDA:     pb9, af4, opendrain
+
+  I2C2_SCL:     pb10, af4, opendrain
+  I2C2_SDA:     pb11, af4, opendrain
+
+  STATUS:       pc7, output, pushpull, startlow
+  ARM_GRN:      pb12, output, pushpull, startlow
+  ARM_RED:      pb13, output, pushpull, startlow
