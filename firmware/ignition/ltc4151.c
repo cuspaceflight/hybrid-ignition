@@ -15,6 +15,8 @@
 #define LTC4151_VIN_SCALE_V     (0.025f)
 
 
+#define LTC4151_ADDRESS     0x6F
+
 /* I2C Config for LTC4151 */
 static const I2CConfig i2c_cfg = {
   .opmode = OPMODE_I2C,
@@ -62,3 +64,28 @@ bool ltc4151_read(LTC4151 *ltc){
 
   return true;
 }
+
+
+/*
+
+i2cStart(&I2CD1, &i2c_cfg);
+
+chThdSleepMilliseconds(100);  
+
+while(true){
+
+    msg_t result;
+    static uint8_t res;
+    static uint8_t read_reg_addr;
+    
+    read_reg_addr = 0x02;
+    
+    i2cAcquireBus(&I2CD1);
+    result = i2cMasterTransmitTimeout(&I2CD1, LTC4151_ADDRESS, &read_reg_addr, 1, &res, 1, MS2ST(200));
+    i2cReleaseBus(&I2CD1);
+    
+    (void)result;
+    chThdSleepMilliseconds(200); 
+}  
+
+*/

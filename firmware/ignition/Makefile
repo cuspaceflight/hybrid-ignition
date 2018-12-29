@@ -112,7 +112,7 @@ CSRC = $(STARTUPSRC) \
        $(HALSRC) \
        $(PLATFORMSRC) \
        $(BOARDSRC) \
-       main.c state.c
+       main.c state.c analog.c
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
