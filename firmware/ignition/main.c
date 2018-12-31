@@ -1,8 +1,9 @@
 #include "ch.h"
 #include "hal.h"
 
-#include "analog.h"
 #include "state.h"
+#include "analog.h"
+#include "ltc4151.h"
 
 int main(void) {
 
@@ -19,6 +20,9 @@ int main(void) {
 
     /* Initialise ADC */
     init_analog();
+
+    /* Initialise LTC4151 Bus */
+    ltc4151_init_bus();
 
     /* Initialise State Machine */
     state_init();
