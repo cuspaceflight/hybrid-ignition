@@ -16,6 +16,7 @@ int main(void) {
 
     chThdSleepMilliseconds(1000);    
     palSetLine(LINE_ARM_SUPPLY);
+    palSetLine(LINE_CH1_FIRE);
     chThdSleepMilliseconds(10);  
 
     /* Initialise ADC */

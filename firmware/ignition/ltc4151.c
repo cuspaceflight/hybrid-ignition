@@ -85,7 +85,7 @@ uint16_t ltc4151_read_value(LTC4151 *ltc, uint8_t val){
 	i2cAcquireBus(ltc->config.i2c);
 	i2cMasterTransmitTimeout(ltc->config.i2c, ltc->config.address, &reg_high, 1, &data_high, 1, MS2ST(20));
 	i2cMasterTransmitTimeout(ltc->config.i2c, ltc->config.address, &reg_low, 1, &data_low, 1, MS2ST(20));
-	i2cReleaseBus(&I2CD1);
+	i2cReleaseBus(ltc->config.i2c);
 
 	result = ((data_high << 4) | ((data_low >> 4) & 0x0F ));
 	return result;

@@ -12,15 +12,26 @@ static THD_FUNCTION(StateThread, arg) {
 
     (void)arg;
     
-    // analog tmp;
-    // get_analog_values(&tmp);
+    analog tmp;    
 
-    LTC4151 supply_sensor;
-    ltc4151_init(&supply_sensor, &I2CD1, 0x6F, 0.1f);
+    /* Initilise LTC4151 Devices */
+    LTC4151 ltc_supply, ltc_ch1, ltc_ch2, ltc_ch3, ltc_ch4, ltc_ch5;
+    ltc4151_init(&ltc_supply, &I2CD1, LTC4151_ADDR_SUPPLY, 0.01f);
+    ltc4151_init(&ltc_ch1, &I2CD2, LTC4151_ADDR_CH1, 0.05f);
+    ltc4151_init(&ltc_ch2, &I2CD2, LTC4151_ADDR_CH2, 0.05f);
+    ltc4151_init(&ltc_ch3, &I2CD2, LTC4151_ADDR_CH3, 0.05f);
+    ltc4151_init(&ltc_ch4, &I2CD2, LTC4151_ADDR_CH4, 0.05f);
+    ltc4151_init(&ltc_ch5, &I2CD2, LTC4151_ADDR_CH5, 0.05f);
 
     while(true){
 
-        ltc4151_get_measurements(&supply_sensor);
+        ltc4151_get_measurements(&ltc_supply);
+        ltc4151_get_measurements(&ltc_ch1);
+        ltc4151_get_measurements(&ltc_ch2);
+        ltc4151_get_measurements(&ltc_ch3);
+        ltc4151_get_measurements(&ltc_ch4);
+        ltc4151_get_measurements(&ltc_ch5);
+        get_analog_values(&tmp);
         chThdSleepMilliseconds(200); 
     } 
     

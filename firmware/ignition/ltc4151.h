@@ -4,6 +4,13 @@
 #include "ch.h"
 #include "hal.h"
 
+#define LTC4151_ADDR_SUPPLY   0x6F
+#define LTC4151_ADDR_CH1      0x6F
+#define LTC4151_ADDR_CH2      0x69
+#define LTC4151_ADDR_CH3      0x67
+#define LTC4151_ADDR_CH4      0x6C
+#define LTC4151_ADDR_CH5      0x6B
+
 typedef struct {
   I2CDriver *i2c;
   i2caddr_t address;
