@@ -7,13 +7,12 @@
 
 #define COMMAND_BANK_STATE          0xF0
 #define COMMAND_VALVE_STATE         0xF1
-#define COMMAND_UPDATE_CONFIG       0xF2
 
 #define VALVE_STATE_ON              0x10
 #define VALVE_STATE_OFF             0x1F
 
-#define BANK_STATE_ENERGIZED        0x1A
 #define BANK_STATE_ARMED            0x1D
+#define BANK_STATE_ENERGIZED        0x1A
 #define BANK_STATE_SAFE             0x12
 #define BANK_STATE_ISOLATED         0x16
 
@@ -31,9 +30,6 @@
 #define BANK_B_CH3                  0xB3
 #define BANK_B_CH4                  0xB4
 #define BANK_B_CH5                  0xB5
-
-#define MAIN_VALVE                  0xA6
-#define IGNITER                     0xB6
 
 
 
@@ -67,7 +63,7 @@ typedef struct __attribute__((packed)) {
     uint8_t     bank;
     uint8_t     state;
     
-} data_bank_state;
+} cmd_data_bank_state;
 
 /* COMMAND DATA - Valve State */
 typedef struct __attribute__((packed)) {
@@ -75,18 +71,7 @@ typedef struct __attribute__((packed)) {
     uint8_t     valve;
     uint8_t     state;
     
-} data_valve_state;
-
-/* COMMAND DATA - Config */
-typedef struct __attribute__((packed)) {
-
-    uint8_t     main_valve_act_1_supply;
-    uint8_t     main_valve_act_1_vent;
-    uint8_t     main_valve_act_2_supply;
-    uint8_t     main_valve_act_2_vent;
-    uint8_t     igniter;
-    
-} data_config;
+} cmd_data_valve_state;
 
 
 
@@ -99,9 +84,11 @@ typedef struct __attribute__((packed)) {
     uint8_t     bank;
     uint8_t     state;
 
-    uint16_t    psu_voltage;
-    uint16_t    firing_bus_voltage;
-    uint16_t    firing_bus_current;
+    uint16_t    mcu_temp;
+
+    float    psu_voltage;
+    float    firing_bus_voltage;
+    float    firing_bus_current;    
     
 } payload_bank_status;
 
@@ -113,10 +100,10 @@ typedef struct __attribute__((packed)) {
 /* CHANNEL DATA */
 typedef struct __attribute__((packed)) {
 
-    uint16_t    firing_bus_voltage;
-    uint16_t    output_voltage;
-    uint16_t    output_current;
-    uint16_t    resistance;
+    float       firing_bus_voltage;
+    float       output_voltage;
+    float       output_current;
+    uint8_t    continuity;
     
 } channel_status;
 
