@@ -1,0 +1,27 @@
+name: comms_router
+lsefreq: 0
+hsefreq: 26000000
+voltage: 3.3
+mcutype: STM32F437xx
+default: input, pushpull, starthigh, pullup, highspeed
+pins:
+  SWDIO:      pa13, af0
+  SWCLK:      pa14, pulldown, af0
+
+  STATUS:     pb12, output, pushpull, startlow
+
+  LED1:       pe3, output, pushpull, startlow
+  LED2:       pe2, output, pushpull, startlow
+
+  RS485_RX:   pb11, af7
+  RS485_TX:   pb10, af7
+
+  BANK_A_RX:  pa3, af7
+  BANK_A_TX:  pa2, af7
+
+  BANK_B_RX:  pa10, af7
+  BANK_B_TX:  pa9, af7
+
+  OTG_HS_DM:  pb14, af12
+  OTG_HS_DP:  pb15, af12
+  OTG_VBUS:   pb13, input, pulldown

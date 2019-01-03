@@ -95,14 +95,24 @@ static THD_FUNCTION(USBRXThread, arg) {
     msg_t retval;    
     
     /* RX Buffer */
-    bool packet_detect = false;
+    uint8_t c;
     int rx_bufidx = 0;
     uint8_t rx_buf[128];
+    bool packet_detect = false;
 
     /* Recieve Bytes over USB */
     while(true) {
         
-        uint8_t c = chnGetTimeout(&SDU1, TIME_INFINITE);
+        /* Attempt to Fetch Byte over USB */
+        msg_t usb_fetch_res = chnGetTimeout(&SDU1, TIME_INFINITE);
+
+        /* Handle Disconnected Cable */
+        if(!(usb_fetch_res == MSG_RESET)){
+            c = (uint8_t)usb_fetch_res;
+        } else {
+            chThdSleepMilliseconds(10000);
+            continue;
+        }
         
         /* Handle Start Byte */
         if(c == 0x7E) {
@@ -217,8 +227,6 @@ static void usb_driver_init(void) {
     usbStart(serusbcfg.usbp, &usbcfg);
     usbConnectBus(serusbcfg.usbp); 
     chThdSleepMilliseconds(1500);
-
-    palSetLine(LINE_LED1);  
 }
 
 

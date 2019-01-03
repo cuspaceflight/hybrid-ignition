@@ -2,6 +2,8 @@
 #include "hal.h"
 
 #include "rs422.h"
+#include "uart_a.h"
+#include "uart_b.h"
 #include "router.h"
 #include "usbserial.h"
 
@@ -21,7 +23,13 @@ int main(void) {
     /* Initialise RS422 */
     rs422_init(&SD3);
 
-    /* Initialise Packet Router  */
+    /* Initialise Bank A UART */
+    bank_a_uart_init(&SD2);
+
+    /* Initialise Bank B UART */
+    bank_b_uart_init(&SD1);
+
+    /* Initialise Packet Router */
     router_init();
 
     /* Ready LED */

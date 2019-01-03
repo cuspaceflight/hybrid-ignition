@@ -83,10 +83,8 @@ static THD_FUNCTION(RS422TXThread, arg) {
         }
 
         /* TX Packet over RS422 */
-        palSetLine(LINE_LED2);
         sdWrite(rs422_seriald, tx_buf, tx_bufidx);
-        palClearLine(LINE_LED2);
-
+        
         /* Free from Memory Pool */        
         chPoolFree(&rs422_mempool, (void*)data_msg);
     }  
