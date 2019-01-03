@@ -83,9 +83,7 @@ static THD_FUNCTION(RS422TXThread, arg) {
         }
 
         /* TX Packet over RS422 */
-        palSetLine(LINE_LED2);
         sdWrite(rs422_seriald, tx_buf, tx_bufidx);
-        palClearLine(LINE_LED2);
 
         /* Free from Memory Pool */        
         chPoolFree(&rs422_mempool, (void*)data_msg);
@@ -167,7 +165,7 @@ bool get_packet_rs422(packet *pkt) {
     intptr_t data_msg;
 
     /* Check for Recieved Packet */
-    mailbox_res = chMBFetch(&rs422_rx_mailbox, (msg_t*)&data_msg, MS2ST(50));
+    mailbox_res = chMBFetch(&rs422_rx_mailbox, (msg_t*)&data_msg, MS2ST(1));
 
     /* Pass Recieved Packet if Avaliable */
     if (mailbox_res != MSG_OK || data_msg == 0) {

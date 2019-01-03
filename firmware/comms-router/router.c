@@ -33,17 +33,15 @@ static THD_FUNCTION(RouterThread, arg) {
             send_packet_to_bank(&tmp_data);
         }
 
-        // TODO - Bottleneck in get_packet
-
-        /*if(get_packet_bank_a(&tmp_data)){
+        if(get_packet_bank_a(&tmp_data)){
             send_packet_rs422(&tmp_data);
-            //send_packet_usb(&tmp_data);
+            send_packet_usb(&tmp_data);
         }
         
         if(get_packet_bank_b(&tmp_data)){
             send_packet_rs422(&tmp_data);
-            //send_packet_usb(&tmp_data);
-        }*/
+            send_packet_usb(&tmp_data);
+        }
 
     }
 }
@@ -106,5 +104,5 @@ uint8_t get_destination(packet *pkt){
 
 /* Start Packet Router Thread */
 void router_init(void) {
-    chThdCreateStatic(waRouterThread, sizeof(waRouterThread), HIGHPRIO, RouterThread, NULL);
+    chThdCreateStatic(waRouterThread, sizeof(waRouterThread), NORMALPRIO, RouterThread, NULL);
 }

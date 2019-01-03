@@ -165,7 +165,7 @@ bool get_packet_usb(packet *pkt) {
     intptr_t data_msg;
 
     /* Check for Recieved Packet */
-    mailbox_res = chMBFetch(&usb_rx_mailbox, (msg_t*)&data_msg, MS2ST(50));
+    mailbox_res = chMBFetch(&usb_rx_mailbox, (msg_t*)&data_msg, MS2ST(1));
 
     /* Pass Recieved Packet if Avaliable */
     if (mailbox_res != MSG_OK || data_msg == 0) {
