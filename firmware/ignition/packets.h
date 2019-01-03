@@ -3,7 +3,8 @@
 
 #define PACKET_COMMAND              0x00
 #define PACKET_CHANNEL_STATUS       0x01
-#define PACKET_BANK_STATUS          0x02  
+#define PACKET_BANK_STATUS          0x02
+#define PACKET_CONFIG               0x03
 
 #define COMMAND_BANK_STATE          0xF0
 #define COMMAND_VALVE_STATE         0xF1
@@ -115,5 +116,18 @@ typedef struct __attribute__((packed)) {
     channel_status  ch_data[5];
     
 } payload_channel_status;
+
+
+
+/*    CONFIG    */
+
+
+/* PACKET PAYLOAD - Config */
+typedef struct __attribute__((packed)) {
+
+    uint8_t     bank; 
+    
+} payload_config;
+
 
 #endif
