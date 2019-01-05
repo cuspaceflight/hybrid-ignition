@@ -8,8 +8,11 @@
 #include "uart_b.h"
 #include "router.h"
 #include "packets.h"
+#include "checksum.h"
 #include "usbserial.h"
 
+/* Prototypes */
+void broadcast_bank_ids(void);
 void send_packet_to_bank(packet *pkt);
 uint8_t get_destination(packet *pkt);
 
@@ -20,10 +23,10 @@ static THD_FUNCTION(RouterThread, arg) {
 
     (void)arg;
     
+    systime_t time = chVTGetSystemTime();
     packet tmp_data; 
     
-    while(true){
-
+    while(true){       
 
         if(get_packet_usb(&tmp_data)){
             send_packet_to_bank(&tmp_data);
@@ -41,6 +44,11 @@ static THD_FUNCTION(RouterThread, arg) {
         if(get_packet_bank_b(&tmp_data)){
             send_packet_rs422(&tmp_data);
             send_packet_usb(&tmp_data);
+        }
+
+        if((chVTGetSystemTime()-time) > MS2ST(10000)){
+            time = chVTGetSystemTime();
+            broadcast_bank_ids();
         }
 
     }
@@ -100,6 +108,33 @@ uint8_t get_destination(packet *pkt){
             return 0;
     }    
 }
+
+
+/* Broadcast Bank IDs */
+void broadcast_bank_ids(void){
+
+    packet bank_a_id, bank_b_id;
+    payload_config bank_a_payload, bank_b_payload;
+
+    bank_a_id.packet_type = PACKET_CONFIG;
+    bank_b_id.packet_type = PACKET_CONFIG;
+
+    bank_a_id.timestamp = chVTGetSystemTime();
+    bank_b_id.timestamp = chVTGetSystemTime();
+
+    bank_a_payload.bank = BANK_A;
+    bank_b_payload.bank = BANK_B;
+
+    memcpy(bank_a_id.payload, &bank_a_payload, sizeof(payload_config));
+    memcpy(bank_b_id.payload, &bank_b_payload, sizeof(payload_config));
+
+    bank_a_id.checksum = fletcher_32(&bank_a_id);
+    bank_b_id.checksum = fletcher_32(&bank_b_id);
+
+    send_packet_bank_a(&bank_a_id);
+    send_packet_bank_b(&bank_b_id);
+}
+
 
 
 /* Start Packet Router Thread */

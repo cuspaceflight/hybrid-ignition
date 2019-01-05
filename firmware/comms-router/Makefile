@@ -112,7 +112,7 @@ CSRC = $(STARTUPSRC) \
        $(HALSRC) \
        $(PLATFORMSRC) \
        $(BOARDSRC) \
-       main.c usbcfg.c usbserial.c router.c rs422.c uart_a.c uart_b.c
+       main.c usbcfg.c usbserial.c router.c rs422.c uart_a.c uart_b.c checksum.c
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
