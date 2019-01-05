@@ -6,7 +6,8 @@
 #define ADC_NUM_CHANNELS    7
 #define ADC_BUF_DEPTH       1
 
-#define COIL_THRESHOLD_MV   100
+#define COIL_THRESHOLD_MV       100
+#define COIL_FIRE_THRESHOLD_MV  3299
 
 static binary_semaphore_t adc_conv_sem;
 
@@ -62,14 +63,18 @@ void get_analog_values(analog *vals){
     chBSemWait(&adc_conv_sem);
 
     /* 24v PSU */
-    vals->psu_voltage = (samples[0]*3300)/4096;
+    vals->psu_voltage = (12*(samples[0]*3300))/4096;
 
     /* Coil Continuity */
     for(int i=0; i<5; i++){
         vals->ch_cont_voltage[i] = (samples[i+1]*3300)/4096;
-        if(vals->ch_cont_voltage[i] > COIL_THRESHOLD_MV){
+        if(vals->ch_cont_voltage[i] == COIL_FIRE_THRESHOLD_MV){
+            vals->ch_cont[i] = CHANNEL_FIRING;
+        }
+        else if(vals->ch_cont_voltage[i] > COIL_THRESHOLD_MV){
             vals->ch_cont[i] = CHANNEL_OPEN;
-        } else {
+        } 
+        else {
             vals->ch_cont[i] = CHANNEL_SHORT;
         }
     }

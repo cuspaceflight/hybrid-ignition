@@ -84,7 +84,7 @@ typedef struct __attribute__((packed)) {
     uint8_t     bank;
     uint8_t     state;
 
-    uint16_t    mcu_temp;
+    float    mcu_temp;
 
     float    psu_voltage;
     float    firing_bus_voltage;

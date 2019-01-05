@@ -13,7 +13,6 @@
 #define VALVE_STATE_OFF             0x1F
 
 #define BANK_STATE_ARMED            0x1D
-#define BANK_STATE_ENERGIZED        0x1A
 #define BANK_STATE_SAFE             0x12
 #define BANK_STATE_ISOLATED         0x16
 
@@ -85,7 +84,7 @@ typedef struct __attribute__((packed)) {
     uint8_t     bank;
     uint8_t     state;
 
-    uint16_t    mcu_temp;
+    float    mcu_temp;
 
     float    psu_voltage;
     float    firing_bus_voltage;
@@ -101,10 +100,11 @@ typedef struct __attribute__((packed)) {
 /* CHANNEL DATA */
 typedef struct __attribute__((packed)) {
 
+    uint8_t     state;
     float       firing_bus_voltage;
     float       output_voltage;
     float       output_current;
-    uint8_t    continuity;
+    uint8_t     continuity;
     
 } channel_status;
 

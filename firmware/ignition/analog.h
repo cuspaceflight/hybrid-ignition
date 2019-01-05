@@ -5,19 +5,20 @@
 
 #define CHANNEL_OPEN    0x00
 #define CHANNEL_SHORT   0xFF
+#define CHANNEL_FIRING  0xAA
 
 /* Analog Measurements Struct */
 typedef struct __attribute__((packed)) {
 
     /* 24v PSU Voltage */
-    uint32_t    psu_voltage;
+    float       psu_voltage;
 
     /* Channel Continuity */
-    uint32_t     ch_cont_voltage[5];
-    uint32_t     ch_cont[5];
+    uint32_t    ch_cont_voltage[5];
+    uint8_t     ch_cont[5];
 
     /* MCU Temp */
-    uint32_t    mcu_temp;
+    float    mcu_temp;
 
 } analog;
 
