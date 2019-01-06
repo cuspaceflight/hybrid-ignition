@@ -202,8 +202,59 @@ static state_t do_state_safe(void){
     /* Read Supply LTC4151 */
     ltc4151_get_measurements(&ltc_supply);
 
+    /* Upload Bank & Channel Status */
+    if((chVTGetSystemTime() - last_packet) > MS2ST(upload_int_ms)){
+
+        /* BANK STATUS PACKET */
+        packet bank_status_pkt;
+        payload_bank_status bank_data;
+
+        /* Populate Payload Data */
+        bank_data.bank = bank_id;
+        bank_data.state = BANK_STATE_SAFE;
+        bank_data.mcu_temp = analog_readings.mcu_temp;
+        bank_data.psu_voltage = ltc_supply.voltage_v;
+        bank_data.firing_bus_voltage = ltc_supply.aux_voltage_v;
+        bank_data.firing_bus_current = ltc_supply.current_ma;
+
+        /* Populate Bank Status Packet */
+        memset(&bank_status_pkt, 0, sizeof(packet));
+        bank_status_pkt.packet_type = PACKET_BANK_STATUS;
+        bank_status_pkt.timestamp = chVTGetSystemTime();
+        memcpy(bank_status_pkt.payload, &bank_data, sizeof(payload_bank_status));
+        bank_status_pkt.checksum = fletcher_32(&bank_status_pkt);
+
+        /* Send Bank Status Packet */
+        send_packet(&bank_status_pkt);
 
 
+        /* CHANNEL STATUS PACKET */
+        packet channel_status_pkt;
+        payload_channel_status channel_data;
+
+        /* Populate Payload Data */
+        channel_data.bank = bank_id;
+        for(int j=0; j<5; j++){
+            channel_data.ch_data[j].state = valves.ch_state[j];
+            channel_data.ch_data[j].firing_bus_voltage = 0;
+            channel_data.ch_data[j].output_voltage = 0;
+            channel_data.ch_data[j].output_current = 0;
+            channel_data.ch_data[j].continuity = analog_readings.ch_cont[j];
+        }
+
+        /* Populate Channel Status Packet */
+        memset(&channel_status_pkt, 0, sizeof(packet));
+        channel_status_pkt.packet_type = PACKET_CHANNEL_STATUS;
+        channel_status_pkt.timestamp = chVTGetSystemTime();
+        memcpy(channel_status_pkt.payload, &channel_data, sizeof(payload_channel_status));
+        channel_status_pkt.checksum = fletcher_32(&channel_status_pkt);
+
+        /* Send Channel Status Packet */
+        send_packet(&channel_status_pkt);
+
+        /* Time of Last Packet TX */
+        last_packet = chVTGetSystemTime();
+    }
 
     /* Check for Bank Status Commands & Switch to Desired State */
     packet cmd_pkt;
@@ -238,13 +289,38 @@ static state_t do_state_safe(void){
 
 
 
+
+/* STATE 4 - Armed (e.g. Ready to Kill!) */
 static state_t do_state_armed(void){
     
     /* Set Arming LED GREEN */
     palSetLine(LINE_ARM_GRN);
     palClearLine(LINE_ARM_RED);
     
-    return STATE_ARMED;
+    /* Turn Off all Valves */
+    for(int i=0; i<5; i++){
+        valves.ch_state[i] = VALVE_STATE_OFF;
+    }
+    set_valves(&valves);
+
+    /* Energize Firing Bus */
+    palSetLine(LINE_ARM_SUPPLY);
+    
+    /* Take Analog Measurements */
+    get_analog_values(&analog_readings);
+
+
+
+    /* TODO - EVERYTHING!!! */
+
+    
+
+    /* E-Stop Detection */
+    if(analog_readings.psu_voltage < PSU_LDO_THRESH){
+        return STATE_ISOLATED;
+    } else {
+        return STATE_ARMED;
+    }
 }
 
 
