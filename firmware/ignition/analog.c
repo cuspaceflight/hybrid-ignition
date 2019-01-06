@@ -6,7 +6,7 @@
 #define ADC_NUM_CHANNELS    7
 #define ADC_BUF_DEPTH       1
 
-#define COIL_THRESHOLD_MV       100
+#define COIL_THRESHOLD_MV       250
 #define COIL_FIRE_THRESHOLD_MV  3299
 
 static binary_semaphore_t adc_conv_sem;

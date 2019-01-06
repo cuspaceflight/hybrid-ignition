@@ -15,9 +15,6 @@ int main(void) {
     halInit();
     chSysInit();
 
-    chThdSleepMilliseconds(1000);    
-    palSetLine(LINE_ARM_SUPPLY);
-
     /* Initialise UART */
     uart_init(&SD1);
 
