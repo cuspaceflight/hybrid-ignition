@@ -199,12 +199,12 @@ static state_t do_state_safe(void){
     /* Take Analog Measurements */
     get_analog_values(&analog_readings);
 
-    /* Read Supply LTC4151 */
-    ltc4151_get_measurements(&ltc_supply);
-
     /* Upload Bank & Channel Status */
     if((chVTGetSystemTime() - last_packet) > MS2ST(upload_int_ms)){
 
+        /* Read Supply LTC4151 */
+        ltc4151_get_measurements(&ltc_supply);
+    
         /* BANK STATUS PACKET */
         packet bank_status_pkt;
         payload_bank_status bank_data;
@@ -256,13 +256,20 @@ static state_t do_state_safe(void){
         last_packet = chVTGetSystemTime();
     }
 
-    /* Check for Bank Status Commands & Switch to Desired State */
+    
     packet cmd_pkt;
     payload_command cmd;
     cmd_data_bank_state cmd_bank_data;
-    if(get_packet(&cmd_pkt)){
+
+    /* Handle Pending Commands */
+    while(get_packet(&cmd_pkt)){
+
         if((cmd_pkt.packet_type == PACKET_COMMAND) && (is_valid(&cmd_pkt))){
             memcpy(&cmd, cmd_pkt.payload, sizeof(payload_command));
+            
+            /* VALID COMMAND DETECTED & PAYLOAD EXTRACTED */
+
+            /* Bank State Command */
             if(cmd.command == COMMAND_BANK_STATE){
                 memcpy(&cmd_bank_data, cmd.data, sizeof(cmd_data_bank_state));
                 if(cmd_bank_data.bank == bank_id){
@@ -276,8 +283,10 @@ static state_t do_state_safe(void){
                     } 
                 }
             }
+
         }
     }
+
 
     /* E-Stop Detection */
     if(analog_readings.psu_voltage < PSU_LDO_THRESH){
@@ -297,23 +306,111 @@ static state_t do_state_armed(void){
     palSetLine(LINE_ARM_GRN);
     palClearLine(LINE_ARM_RED);
     
-    /* Turn Off all Valves */
-    for(int i=0; i<5; i++){
-        valves.ch_state[i] = VALVE_STATE_OFF;
-    }
-    set_valves(&valves);
-
     /* Energize Firing Bus */
     palSetLine(LINE_ARM_SUPPLY);
     
     /* Take Analog Measurements */
     get_analog_values(&analog_readings);
 
+    /* Upload Bank & Channel Status */
+    if((chVTGetSystemTime() - last_packet) > MS2ST(upload_int_ms)){
 
-
-    /* TODO - EVERYTHING!!! */
-
+        /* Read Supply LTC4151 */
+        ltc4151_get_measurements(&ltc_supply);
     
+        /* BANK STATUS PACKET */
+        packet bank_status_pkt;
+        payload_bank_status bank_data;
+
+        /* Populate Payload Data */
+        bank_data.bank = bank_id;
+        bank_data.state = BANK_STATE_ARMED;
+        bank_data.mcu_temp = analog_readings.mcu_temp;
+        bank_data.psu_voltage = ltc_supply.voltage_v;
+        bank_data.firing_bus_voltage = ltc_supply.aux_voltage_v;
+        bank_data.firing_bus_current = ltc_supply.current_ma;
+
+        /* Populate Bank Status Packet */
+        memset(&bank_status_pkt, 0, sizeof(packet));
+        bank_status_pkt.packet_type = PACKET_BANK_STATUS;
+        bank_status_pkt.timestamp = chVTGetSystemTime();
+        memcpy(bank_status_pkt.payload, &bank_data, sizeof(payload_bank_status));
+        bank_status_pkt.checksum = fletcher_32(&bank_status_pkt);
+
+        /* Send Bank Status Packet */
+        send_packet(&bank_status_pkt);
+
+
+        /* CHANNEL STATUS PACKET */
+        packet channel_status_pkt;
+        payload_channel_status channel_data;
+
+        /* Populate Payload Data */
+        channel_data.bank = bank_id;
+        for(int k=0; k<5; k++){
+            ltc4151_get_measurements(&ltc_ch[k]);
+            channel_data.ch_data[k].state = valves.ch_state[k];
+            channel_data.ch_data[k].firing_bus_voltage = ltc_ch[k].voltage_v;
+            channel_data.ch_data[k].output_voltage = ltc_ch[k].aux_voltage_v;
+            channel_data.ch_data[k].output_current = ltc_ch[k].current_ma;
+            channel_data.ch_data[k].continuity = analog_readings.ch_cont[k];
+        }
+
+        /* Populate Channel Status Packet */
+        memset(&channel_status_pkt, 0, sizeof(packet));
+        channel_status_pkt.packet_type = PACKET_CHANNEL_STATUS;
+        channel_status_pkt.timestamp = chVTGetSystemTime();
+        memcpy(channel_status_pkt.payload, &channel_data, sizeof(payload_channel_status));
+        channel_status_pkt.checksum = fletcher_32(&channel_status_pkt);
+
+        /* Send Channel Status Packet */
+        send_packet(&channel_status_pkt);
+
+        /* Time of Last Packet TX */
+        last_packet = chVTGetSystemTime();
+    }
+
+
+    packet cmd_pkt;
+    payload_command cmd;
+    cmd_data_bank_state cmd_bank_data;
+    cmd_data_valve_state cmd_valve_data;
+
+    /* Handle Pending Commands */
+    while(get_packet(&cmd_pkt)){
+
+        if((cmd_pkt.packet_type == PACKET_COMMAND) && (is_valid(&cmd_pkt))){
+            memcpy(&cmd, cmd_pkt.payload, sizeof(payload_command));
+            
+            /* VALID COMMAND DETECTED & PAYLOAD EXTRACTED */
+
+            /* Bank State Command */
+            if(cmd.command == COMMAND_BANK_STATE){
+                memcpy(&cmd_bank_data, cmd.data, sizeof(cmd_data_bank_state));
+                if(cmd_bank_data.bank == bank_id){
+                    switch(cmd_bank_data.state){
+                        case BANK_STATE_ARMED:
+                            return STATE_ARMED; 
+                            break;
+                        case BANK_STATE_SAFE:
+                            return STATE_SAFE;
+                            break;
+                    } 
+                }
+            }
+
+            /* Valve State Command */
+            if(cmd.command == COMMAND_VALVE_STATE){
+                memcpy(&cmd_valve_data, cmd.data, sizeof(cmd_data_valve_state));
+                if((cmd_valve_data.valve & 0xF0) == bank_id){                                       
+                    valves.ch_state[(cmd_valve_data.valve & 0x0F)-1] = cmd_valve_data.state;
+                    set_valves(&valves);
+                }
+            }
+
+        }
+    }
+
 
     /* E-Stop Detection */
     if(analog_readings.psu_voltage < PSU_LDO_THRESH){
