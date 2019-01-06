@@ -11,7 +11,7 @@
 uint32_t fletcher_32(packet *pkt){
     
     int i;
-    uint16_t ck_a = 0, ck_b = 0;
+    uint32_t ck_a = 0, ck_b = 0;
     const int n = sizeof(packet) - sizeof(uint32_t);
     uint8_t buf[n];
 
@@ -19,8 +19,8 @@ uint32_t fletcher_32(packet *pkt){
 
     for(i=0; i<n; i++) {
         ck_a += buf[i];
+        ck_a %= 65535;
         ck_b += ck_a;
     }
-
-    return (ck_b<<16) | (ck_a);
+    return ((ck_b % 65535)<<16) | (ck_a & 0xFFFF);
 }

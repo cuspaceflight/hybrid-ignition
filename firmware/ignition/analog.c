@@ -38,7 +38,7 @@ static const ADCConversionGroup adcgrpcfg = {
 
 
 /* Setup ADC */
-void init_analog(void){
+void analog_init(void){
 
     /* Start ADC */
     adcStart(&ADCD1, NULL);

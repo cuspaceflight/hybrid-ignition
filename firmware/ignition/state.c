@@ -1,11 +1,14 @@
 #include "ch.h"
 #include "hal.h"
 
+#include "uart.h"
 #include "state.h"
 #include "analog.h"
 #include "valves.h"
 #include "packets.h"
 #include "ltc4151.h"
+#include "checksum.h"
+
 
 
 /* State Machine Thread */
@@ -15,6 +18,8 @@ static THD_FUNCTION(StateThread, arg) {
     (void)arg;
     
     analog tmp;
+
+    packet data;
 
     valve_state valves;
     valves.ch_state[0] = VALVE_STATE_ON;
@@ -45,7 +50,16 @@ static THD_FUNCTION(StateThread, arg) {
         ltc4151_get_measurements(&ltc_ch[3]);
         ltc4151_get_measurements(&ltc_ch[4]);
         get_analog_values(&tmp);
-        chThdSleepMilliseconds(200); 
+
+        if(get_packet(&data)){
+            palSetLine(LINE_ARM_GRN);
+            uint32_t test = fletcher_32(&data);
+            if(test == data.checksum){
+                palClearLine(LINE_ARM_GRN);
+            }
+        }
+
+        chThdSleepMilliseconds(10);
     } 
     
 }

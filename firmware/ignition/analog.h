@@ -18,12 +18,12 @@ typedef struct __attribute__((packed)) {
     uint8_t     ch_cont[5];
 
     /* MCU Temp */
-    float    mcu_temp;
+    float       mcu_temp;
 
 } analog;
 
 /* Setup ADC */
-void init_analog(void);
+void analog_init(void);
 
 /* ADC Conversion */
 void get_analog_values(analog *vals);
