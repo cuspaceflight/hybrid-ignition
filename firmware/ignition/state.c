@@ -11,6 +11,8 @@
 #include "ltc4151.h"
 #include "checksum.h"
 
+#define PSU_LDO_THRESH  20000
+
 /* Global Variables */
 static uint8_t bank_id = 0;
 analog analog_readings;
@@ -47,7 +49,6 @@ state_t run_state(state_t cur_state){
 
 
 
-
 /* STATE 1 - Initialisation */
 static state_t do_state_init(void){
     
@@ -60,6 +61,9 @@ static state_t do_state_init(void){
         valves.ch_state[i] = VALVE_STATE_OFF;
     }
     set_valves(&valves);
+
+    /* De-Energize Firing Bus */
+    palClearLine(LINE_ARM_SUPPLY);
 
     /* Initialise LTC4151 Devices */
     ltc4151_init(&ltc_supply, &I2CD1, LTC4151_ADDR_SUPPLY, 0.01f);
@@ -83,15 +87,31 @@ static state_t do_state_init(void){
 }
 
 
+
 /* STATE 2 - Isolated (e.g. Key Switch in SAFE Position) */
 static state_t do_state_isolated(void){
     
     /* NO 24V SUPPLY IN THIS STATE */
 
-    get_analog_values(&analog_readings);
+    /* Clear Arming LED */
+    palClearLine(LINE_ARM_GRN);
+    palClearLine(LINE_ARM_RED);
 
+    /* Turn Off all Valves */
+    for(int i=0; i<5; i++){
+        valves.ch_state[i] = VALVE_STATE_OFF;
+    }
+    set_valves(&valves);
+
+    /* De-Energize Firing Bus */
+    palClearLine(LINE_ARM_SUPPLY);
+
+    /* Flush Any Packets */
     packet tmp;
     get_packet(&tmp);
+
+    /* Take Analog Measurements */
+    get_analog_values(&analog_readings);
 
     /* Upload Bank & Channel Status */
     if((chVTGetSystemTime() - last_packet) > MS2ST(upload_int_ms)){
@@ -117,7 +137,6 @@ static state_t do_state_isolated(void){
 
         /* Send Bank Status Packet */
         send_packet(&bank_status_pkt);
-
 
 
         /* CHANNEL STATUS PACKET */
@@ -148,8 +167,9 @@ static state_t do_state_isolated(void){
         last_packet = chVTGetSystemTime();
     }
 
-    /* State Transition Logic */
-    if(analog_readings.psu_voltage > 23000){
+
+    /* Detect Ket Switch and Switch State */
+    if(analog_readings.psu_voltage > PSU_LDO_THRESH){
         return STATE_SAFE;
     } else {
         return STATE_ISOLATED;
@@ -158,13 +178,73 @@ static state_t do_state_isolated(void){
 
 
 
-
-
+/* STATE 3 - Safe (e.g. Key Switch in ARM Position) */
 static state_t do_state_safe(void){
-    return STATE_ISOLATED;
+
+    /* 24V READY TO BE SWITCHED TO FIRING BUS */
+
+    /* Set Arming LED RED */
+    palClearLine(LINE_ARM_GRN);
+    palSetLine(LINE_ARM_RED);
+
+    /* Turn Off all Valves */
+    for(int i=0; i<5; i++){
+        valves.ch_state[i] = VALVE_STATE_OFF;
+    }
+    set_valves(&valves);
+
+    /* De-Energize Firing Bus */
+    palClearLine(LINE_ARM_SUPPLY);
+    
+    /* Take Analog Measurements */
+    get_analog_values(&analog_readings);
+
+    /* Read Supply LTC4151 */
+    ltc4151_get_measurements(&ltc_supply);
+
+
+
+
+    /* Check for Bank Status Commands & Switch to Desired State */
+    packet cmd_pkt;
+    payload_command cmd;
+    cmd_data_bank_state cmd_bank_data;
+    if(get_packet(&cmd_pkt)){
+        if((cmd_pkt.packet_type == PACKET_COMMAND) && (is_valid(&cmd_pkt))){
+            memcpy(&cmd, cmd_pkt.payload, sizeof(payload_command));
+            if(cmd.command == COMMAND_BANK_STATE){
+                memcpy(&cmd_bank_data, cmd.data, sizeof(cmd_data_bank_state));
+                if(cmd_bank_data.bank == bank_id){
+                    switch(cmd_bank_data.state){
+                        case BANK_STATE_ARMED:
+                            return STATE_ARMED; 
+                            break;
+                        case BANK_STATE_SAFE:
+                            return STATE_SAFE;
+                            break;
+                    } 
+                }
+            }
+        }
+    }
+
+    /* E-Stop Detection */
+    if(analog_readings.psu_voltage < PSU_LDO_THRESH){
+        return STATE_ISOLATED;
+    } else {
+        return STATE_SAFE;
+    }
 }
+
+
+
 static state_t do_state_armed(void){
-    return STATE_ISOLATED;
+    
+    /* Set Arming LED GREEN */
+    palSetLine(LINE_ARM_GRN);
+    palClearLine(LINE_ARM_RED);
+    
+    return STATE_ARMED;
 }
 
 
