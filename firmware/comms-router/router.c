@@ -61,12 +61,10 @@ void send_packet_to_bank(packet *pkt){
     switch(get_destination(pkt)){
 
         case BANK_A:
-
             send_packet_bank_a(pkt);  
             break;
 
         case BANK_B:
-            
             send_packet_bank_b(pkt);
             break;
     } 
@@ -79,6 +77,11 @@ uint8_t get_destination(packet *pkt){
 
     /* Check Packet is a Command */
     if(!(pkt->packet_type == PACKET_COMMAND)){
+        return 0;
+    }
+
+    /* Check Checksum Valid */
+    if(!(is_valid(pkt))){
         return 0;
     }
 
@@ -134,7 +137,6 @@ void broadcast_bank_ids(void){
     send_packet_bank_a(&bank_a_id);
     send_packet_bank_b(&bank_b_id);
 }
-
 
 
 /* Start Packet Router Thread */

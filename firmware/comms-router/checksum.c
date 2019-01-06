@@ -24,3 +24,7 @@ uint32_t fletcher_32(packet *pkt){
     }
     return ((ck_b % 65535)<<16) | (ck_a & 0xFFFF);
 }
+
+bool is_valid(packet *pkt){
+    return fletcher_32(pkt) == pkt->checksum;
+}
