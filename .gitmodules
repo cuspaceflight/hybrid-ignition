@@ -7,3 +7,6 @@
 [submodule "gen-board.h"]
 	path = gen-board.h
 	url = git@github.com:HarkonenBade/gen-board.h.git
+[submodule "m4-gcs"]
+	path = m4-gcs
+	url = git@github.com:cuspaceflight/m4-gcs.git
