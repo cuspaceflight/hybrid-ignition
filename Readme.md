@@ -18,3 +18,7 @@ This repository contains the design files for the valve controller used by CU Sp
     * **ignition:** Actuates valves on command and reports measurements such as currents consumption, output voltage and if the valve coil is plugged in or not.
 
 Developed by Matt Coates (mc955).
+
+### Future Modifications
+* The firing LEDs have their cathodes driven to 24v when a channel is armed but not firing. These LEDs should be moved to be driven by the GPIO that drives the gate of the firing FET.
+* Flyback diodes are required on the output channels.
